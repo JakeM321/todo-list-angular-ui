@@ -1,7 +1,7 @@
-import { Component, OnInit, Output, EventEmitter, Input, Inject } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { LoginService } from 'src/modules/login/services/LoginService';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login-form',
@@ -15,9 +15,16 @@ export class LoginFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loginService.pick(state => state.loading).subscribe(loading => {
+      if (loading) {
+        this.form.disable();
+      } else {
+        this.form.enable();
+      }
+    });
   }
 
-  @Input() error: Observable<boolean>;
+  @Input() loading: Observable<boolean>;
   @Output() submit = new EventEmitter<{email: string, password: string}>();
 
   onSubmit = () => {
@@ -32,7 +39,7 @@ export class LoginFormComponent implements OnInit {
   }
 
   form = new FormGroup({
-    email:  new FormControl('', Validators.required),
+    email:  new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', Validators.required)
   });
 

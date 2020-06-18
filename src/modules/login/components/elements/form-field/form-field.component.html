@@ -1,0 +1,24 @@
+<div class="field" [formGroup]="form" style="margin-bottom: 5px;" >
+    <label class="label">{{ label }}</label>
+        
+    <p class="control has-icons-left">
+        <input 
+            class="input" 
+            [type]="type"
+            [ngClass]="( (hasErrors | async) || control.invalid) && control.touched ? 'is-danger' : ''"
+            [formControl]="control"
+            
+        />
+        <ng-container *ngIf="hasLeftIcon">
+            <span class="icon is-small is-left">
+                <fa-icon [icon]="icon"></fa-icon>
+            </span>
+        </ng-container>
+    </p>
+    <ng-container *ngFor="let key of errorKeys">
+        <p class="help is-danger" *ngIf="checkError(key).hasError">
+            {{ checkError(key).message }}
+        </p>
+    </ng-container>
+    
+</div>

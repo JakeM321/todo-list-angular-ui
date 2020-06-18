@@ -11,9 +11,10 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { LoginFormComponent } from './components/forms/login-form/login-form.component';
 import { RegisterFormComponent } from './components/forms/register-form/register-form.component';
 import { SigningFormComponent } from './components/wrappers/signing-form/signing-form.component';
+import { FormFieldComponent } from './components/elements/form-field/form-field.component';
 
 @NgModule({
-  declarations: [LoginUiComponent, LoginFormComponent, RegisterFormComponent, SigningFormComponent],
+  declarations: [LoginUiComponent, LoginFormComponent, RegisterFormComponent, SigningFormComponent, FormFieldComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

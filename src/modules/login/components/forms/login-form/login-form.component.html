@@ -1,34 +1,21 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="field">
-        <label class="label">Email</label>
-        <p class="control has-icons-left">
-            <input class="input" formControlName="email" />
-            <span class="icon is-small is-left">
-                <fa-icon class="button-icon" [icon]="['fas', 'envelope']"></fa-icon>
-            </span>
-        </p>
-        
-    </div>
+    <app-form-field
+        label="Email"
+        controlName="email"
+        [hasLeftIcon]="true"
+        [icon]="['fas', 'envelope']"
+    ></app-form-field>
 
-    <div class="field">
-        <label class="label">Password</label>
-        <p class="control has-icons-left">
-            <input class="input" formControlName="password" type="password" />
-            <span class="icon is-small is-left">
-                <fa-icon class="button-icon" [icon]="['fas', 'lock']"></fa-icon>
-            </span>
-        </p>
-    </div>
+    <app-form-field
+        type="password"
+        label="Password"
+        controlName="password"
+        [hasLeftIcon]="true"
+        [icon]="['fas', 'lock']"
+    ></app-form-field>
     <br/>
-    <ng-container *ngIf="error | async">
-        <div class="message is-danger">
-            <div class="message-body">
-                Invalid email address or password.
-            </div>
-        </div>
-        <br/>
-    </ng-container>
-    <button type="submit" class="button is-dark">Sign in</button>
+    <ng-content></ng-content>
+    <button type="submit" class="button is-dark" [disabled]="(loading | async) || !form.valid">Sign in</button>
     <br/><br/>
-    <p>Don't have an account? <a [routerLink]="" (click)="register()">Sign up</a> </p> 
+    <p>Don't have an account? <a (click)="register()">Sign up</a> </p> 
 </form>

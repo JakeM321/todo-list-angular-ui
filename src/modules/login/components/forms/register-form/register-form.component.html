@@ -1,1 +1,37 @@
-<p>register-form works!</p>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <app-form-field
+        label="Email"
+        controlName="email"
+        [hasLeftIcon]="true"
+        [icon]="['fas', 'envelope']"
+    ></app-form-field>
+
+    <app-form-field
+        label="Display name"
+        controlName="displayName"
+        [hasLeftIcon]="false"
+        [icon]="['fa', 'userCircle']"
+    ></app-form-field>
+
+    <app-form-field
+        type="password"
+        label="Password"
+        controlName="password"
+        [hasLeftIcon]="true"
+        [icon]="['fas', 'lock']"
+    ></app-form-field>
+
+    <app-form-field
+        type="password"
+        label="Confirm password"
+        controlName="confirmPassword"
+        [hasLeftIcon]="true"
+        [icon]="['fas', 'lock']"
+        [errorMessages]="{ 'mustMatch': 'Passwords must match.' }"
+    ></app-form-field>
+
+    <br/>
+    <button type="submit" class="button is-dark" [disabled]="(loading | async) || !form.valid">Sign up</button>
+    <br/><br/>
+    <p>Already have an account? <a (click)="login()">Sign in</a> </p> 
+</form>
