@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
+import { LoginService } from '../../services/LoginService';
+import { IAuthenticationService } from 'src/modules/server/services/IAuthenticationService';
 
 @Component({
   selector: 'app-login-ui',
@@ -7,10 +9,16 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class LoginUiComponent implements OnInit {
-
-  constructor() { }
+  constructor(
+    private loginService: LoginService,
+    
+  ) { }
 
   ngOnInit(): void {
   }
 
+  screen = this.loginService.screen;
+  loginError = this.loginService.loginError;
+
+  login = this.loginService.login;
 }

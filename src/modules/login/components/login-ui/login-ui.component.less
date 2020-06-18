@@ -10,12 +10,27 @@
     background-color: var(--colour-login-bg);
 }
 
+.button-icon {
+    margin-right: 5px;
+}
+
+.button {
+    width: 100%;
+}
+
 @media all and (min-width: @sizes[mobile]) {
-    .card, .card-content, .content {
+    .card {
         width: 400px;
     }
 
     .wrapper {
-        margin-top: 200px;
+        margin-top: 100px;
+    }
+}
+
+@media all and (max-width: @sizes[mobile]) {
+    .card {
+        width: 100vw;
+        min-height: 100vh;
     }
 }

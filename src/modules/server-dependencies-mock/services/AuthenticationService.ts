@@ -33,7 +33,7 @@ export class AuthenticationService extends Service<AuthenticationServiceState> i
         this.setState(state => ({
             ...state,
             status: {
-                isAuthenticated: true,
+                isAuthenticated: false,
                 name: {
                     first: 'John',
                     last: 'Smith'
@@ -44,7 +44,7 @@ export class AuthenticationService extends Service<AuthenticationServiceState> i
         return callback;
     }
 
-    Login = (payload: PasswordAuthPayload) => this.setUser( of<AuthResult>({ success: true }).pipe(delay(500)) );
+    Login = (payload: PasswordAuthPayload) => this.setUser( of<AuthResult>({ success: false }).pipe(delay(500)) );
     Register = (payload: PasswordAuthPayload) => this.setUser( of<RegisterResult>({ success: true, accountAlreadyInUse: false }).pipe(delay(500)) );
 
     OAuthLogin = (payload: OAuthPayload) => this.setUser( of<AuthResult>({ success: true }).pipe(delay(500)) );

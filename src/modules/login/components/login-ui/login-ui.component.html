@@ -2,7 +2,21 @@
     <div class="card">
         <div class="card-content">
             <div class="content">
-                <p>login-ui works!</p>
+                <ng-container [ngSwitch]="screen | async">
+                    <ng-container *ngSwitchCase="'login'">
+                        <app-signing-form header="Login">
+                            <app-login-form (submit)="login($event)" [error]="loginError"></app-login-form>
+                        </app-signing-form>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'register'">
+                        <app-signing-form header="Sign up">
+                            <p>Register form here</p>
+                        </app-signing-form>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'register-details'">
+                        Register details
+                    </ng-container>
+                </ng-container>
             </div>
         </div>
     </div>
