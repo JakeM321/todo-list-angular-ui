@@ -9,6 +9,6 @@ import { LoginUiComponent } from './components/login-ui/login-ui.component';
   imports: [
     CommonModule
   ],
-  bootstrap: [LoginUiComponent]
+  exports: [ LoginUiComponent ]
 })
 export class LoginModule { }

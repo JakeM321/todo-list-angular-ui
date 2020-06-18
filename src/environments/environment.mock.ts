@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import { ServerDependenciesModule } from 'src/modules/server-dependencies/server-dependencies.module';
+import { ServerDependenciesMockModule } from 'src/modules/server-dependencies-mock/server-dependencies-mock.module';
 
 export const environment = {
   production: false
@@ -17,4 +17,4 @@ export const environment = {
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
 
-export { ServerDependenciesModule as DependenciesModule }
+export { ServerDependenciesMockModule as DependenciesModule }

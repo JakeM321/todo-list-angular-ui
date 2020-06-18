@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ServerModule } from 'src/modules/server/server.module';
+import { LoginModule } from 'src/modules/login/login.module';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -10,9 +13,14 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    LoginModule,
+    ServerModule
   ],
-  providers: [],
+  providers: [{
+    provide: 'environment',
+    useValue: environment
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
