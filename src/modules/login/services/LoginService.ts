@@ -3,8 +3,10 @@ import { IAuthenticationService } from 'src/modules/server/services/IAuthenticat
 import { Service } from 'src/shared/Service';
 import { Router } from '@angular/router';
 
+type Screen = 'login' | 'register' | 'register-details';
+
 interface LoginServiceState {
-    screen: 'login' | 'register' | 'register-details',
+    screen: Screen,
     loading: boolean,
     loginError: boolean
 };
@@ -31,6 +33,10 @@ export class LoginService extends Service<LoginServiceState> {
     }
 
     screen = this.pick(state => state.screen);
+    navigate = (screen: Screen) => this.setState(state => ({
+        ...state,
+        screen
+    }));
 
     login = (payload: LoginPayload) => {
         this.setState(state => ({

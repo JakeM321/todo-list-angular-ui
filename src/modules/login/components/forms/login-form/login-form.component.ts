@@ -1,6 +1,7 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { LoginService } from 'src/modules/login/services/LoginService';
 
 @Component({
   selector: 'app-login-form',
@@ -9,7 +10,9 @@ import { Observable } from 'rxjs';
 })
 export class LoginFormComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private loginService: LoginService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -33,4 +36,5 @@ export class LoginFormComponent implements OnInit {
     password: new FormControl('', Validators.required)
   });
 
+  register = () => this.loginService.navigate('register');
 }
