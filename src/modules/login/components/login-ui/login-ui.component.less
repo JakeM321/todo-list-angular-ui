@@ -1,0 +1,21 @@
+@import 'styles.less';
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+:root {
+    background-color: var(--colour-login-bg);
+}
+
+@media all and (min-width: @sizes[mobile]) {
+    .card, .card-content, .content {
+        width: 400px;
+    }
+
+    .wrapper {
+        margin-top: 200px;
+    }
+}
