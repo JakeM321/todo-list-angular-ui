@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, ControlContainer, FormControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { map, throwIfEmpty } from 'rxjs/operators';
+import { map, combineLatest } from 'rxjs/operators';
 import _ from 'lodash';
 
 @Component({
@@ -30,6 +30,7 @@ export class FormFieldComponent implements OnInit {
   @Input() liveValidationSucceeded: Observable<boolean> = of(false);
 
   public controlClass: string = '';
+  public inputClass: Observable<string>;
 
   ngOnInit(): void {
     this.form = <FormGroup>this.controlContainer.control;
@@ -55,6 +56,18 @@ export class FormFieldComponent implements OnInit {
 
       this.controlClass = newClass;
     });
+
+    this.inputClass = this.hasErrors.pipe(
+      combineLatest(this.liveValidationSucceeded, ( hasErrors, validationSucceeded ) => {
+        if ((hasErrors || this.control.invalid) && this.control.touched) {
+          return 'is-danger';
+        } else if (validationSucceeded) {
+          return 'is-success';
+        } else {
+          return '';
+        }
+      })
+    );
   }
 
   private checkField = (key: string): boolean => {
@@ -66,6 +79,4 @@ export class FormFieldComponent implements OnInit {
     hasError: this.checkField(key),
     message: this.errorMessages[key]
   });
-
-  stringify = value => JSON.stringify(value);
 }

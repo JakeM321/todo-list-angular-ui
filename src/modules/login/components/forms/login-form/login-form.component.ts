@@ -25,11 +25,10 @@ export class LoginFormComponent implements OnInit {
   }
 
   @Input() loading: Observable<boolean>;
-  @Output() submit = new EventEmitter<{email: string, password: string}>();
 
   onSubmit = () => {
     if (this.form.valid) {
-      this.submit.emit({
+      this.loginService.login({
         email: this.form.get('email').value,
         password: this.form.get('password').value
       });

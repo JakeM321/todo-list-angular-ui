@@ -19,6 +19,10 @@ export interface PasswordAuthPayload {
     password: string;
 }
 
+export interface PasswordRegisterPayload extends PasswordAuthPayload {
+    displayName: string;
+}
+
 export interface OAuthPayload {
     token: string;
 }

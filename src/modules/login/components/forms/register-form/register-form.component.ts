@@ -1,8 +1,8 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { LoginService } from 'src/modules/login/services/LoginService';
-import { FormGroup, FormControl, Validators, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
-import { Observable, timer } from 'rxjs';
-import { map, switchMap, debounceTime, distinct, distinctUntilChanged } from 'rxjs/operators';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 
 import _ from 'lodash';
 
@@ -51,28 +51,42 @@ export class RegisterFormComponent implements OnInit {
 
     const emailField = this.form.get('email');
 
-    emailField.valueChanges.pipe(distinctUntilChanged(), debounceTime(500)).subscribe(email => {
-      if (! _.get(this.form.get('email').errors, 'email', false) ) {
+    emailField.valueChanges.pipe(
+      distinctUntilChanged(),
+      debounceTime(500),
+      filter(value => ! _.isEmpty(value))
+    ).subscribe(email => {
+      if (! _.get(emailField.errors, 'email', false) ) {
         this.loginService.validateEmail(email).subscribe(available => {
-          const { emailInUse, ...remainingErrors } = emailField.errors;
-          emailField.setErrors( available ? remainingErrors : { emailInUse: true });
+
+          const remainingErrors = () => {
+            if (_.has(emailField, 'errors.emailInUse')) {
+              const { emailInUse, ...remaining } = emailField.errors;
+              return remaining;
+            } else {
+              return emailField.errors;
+            }
+          };
+
+          emailField.setErrors( available ? remainingErrors() : { emailInUse: true });
         });
       } else {
-        this.loginService.setState(state => ({ ...state, emailValid: false}));
+        this.loginService.resetEmailValidation();
       }
     })
   }
 
   @Input() loading: Observable<boolean>;
-  @Output() submit = new EventEmitter<{email: string, password: string}>();
 
   onSubmit = () => {
     if (this.form.valid) {
-      this.submit.emit({
+      this.loginService.register({
         email: this.form.get('email').value,
-        password: this.form.get('password').value
+        password: this.form.get('password').value,
+        displayName: this.form.get('displayName').value
       });
 
+      this.loginService.resetEmailValidation();
       this.form.reset();
     }
   };

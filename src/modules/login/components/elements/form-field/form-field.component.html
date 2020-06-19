@@ -5,7 +5,7 @@
         <input 
             class="input" 
             [type]="type"
-            [ngClass]="( (hasErrors | async) || control.invalid) && control.touched ? 'is-danger' : (liveValidationSucceeded | async) ? 'is-success' : ''"
+            [ngClass]="inputClass | async"
             [formControl]="control"
         />
         <ng-container *ngIf="hasLeftIcon">
@@ -15,7 +15,7 @@
         </ng-container>
         <ng-container *ngIf="liveValidationSucceeded | async">
             <span class="icon is-small is-right">
-                <fa-icon [icon]="['fas', 'check']"></fa-icon>
+                <fa-icon style="color: #00d1b2" [icon]="['fas', 'check']"></fa-icon>
             </span>
         </ng-container>
     </p>

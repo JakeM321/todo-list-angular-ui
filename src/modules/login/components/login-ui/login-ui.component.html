@@ -5,7 +5,7 @@
                 <ng-container [ngSwitch]="screen | async">
                     <ng-container *ngSwitchCase="'login'">
                         <app-signing-form header="Login">
-                            <app-login-form (submit)="login($event)" [loading]="loading">
+                            <app-login-form [loading]="loading">
                                 <ng-container *ngIf="loginError | async">
                                     <div class="message is-danger">
                                         <div class="message-body">
@@ -19,7 +19,7 @@
                     </ng-container>
                     <ng-container *ngSwitchCase="'register'">
                         <app-signing-form header="Sign up">
-                            <app-register-form (submit)="register($event)" [loading]="loading"></app-register-form>
+                            <app-register-form [loading]="loading"></app-register-form>
                         </app-signing-form>
                     </ng-container>
                     <ng-container *ngSwitchCase="'register-details'">

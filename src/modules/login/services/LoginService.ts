@@ -2,6 +2,7 @@ import { Injectable, Inject } from "@angular/core";
 import { IAuthenticationService } from 'src/modules/server/services/IAuthenticationService';
 import { Service } from 'src/shared/Service';
 import { Router } from '@angular/router';
+import { PasswordAuthPayload, PasswordRegisterPayload, AuthResult, RegisterResult } from 'src/modules/server/Types';
 
 type Screen = 'login' | 'register' | 'register-details';
 
@@ -21,11 +22,6 @@ const initialState: LoginServiceState = {
     emailValid: false
 };
 
-export interface LoginPayload {
-    email: string,
-    password: string
-};
-
 @Injectable()
 export class LoginService extends Service<LoginServiceState> {
     constructor(
@@ -42,24 +38,36 @@ export class LoginService extends Service<LoginServiceState> {
         screen
     }));
 
-    login = (payload: LoginPayload) => {
+    private submit = (action, process) => payload => {
         this.setState(state => ({
             ...state,
             loading: true
         }));
 
-        this.authenticationService.Login({ ...payload }).subscribe(result => {
-            this.setState(state => ({
-                ...state,
-                loading: false,
-                loginError: !result.success
-            }));
+        action(payload).subscribe((result: AuthResult) => {
+            this.setState(state => ({ ...state, loading: false }));
+            process(result);
 
             if (result.success) {
                 this.router.navigate(['/dashboard']);
             }
-        })
+        });
     };
+
+    login = this.submit(
+        this.authenticationService.Login,
+        (result: AuthResult) => {
+            this.setState(state => ({
+                ...state,
+                loginError: !result.success
+            }));
+        }
+    );
+
+    register = this.submit(
+        this.authenticationService.Register,
+        (result: RegisterResult) => {}
+    );
 
     loginError = this.pick(state => state.loginError);
 
@@ -74,5 +82,7 @@ export class LoginService extends Service<LoginServiceState> {
         })));
 
         return validation;
-    }
+    };
+
+    resetEmailValidation = () => this.setState(state => ({ ...state, emailValid: false}));
 }

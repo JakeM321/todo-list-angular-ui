@@ -20,8 +20,5 @@ export class LoginUiComponent implements OnInit {
   screen = this.loginService.screen;
   loginError = this.loginService.loginError;
 
-  login = this.loginService.login;
-  register = (payload: any) => { console.log('register', payload) };
-
   loading = this.loginService.pick(state => state.loading);
 }
