@@ -8,13 +8,17 @@ type Screen = 'login' | 'register' | 'register-details';
 interface LoginServiceState {
     screen: Screen,
     loading: boolean,
-    loginError: boolean
+    loginError: boolean,
+    validatingEmail: boolean,
+    emailValid: boolean
 };
 
 const initialState: LoginServiceState = {
     screen: 'login',
     loading: false,
-    loginError: false
+    loginError: false,
+    validatingEmail: false,
+    emailValid: false
 };
 
 export interface LoginPayload {
@@ -58,4 +62,17 @@ export class LoginService extends Service<LoginServiceState> {
     };
 
     loginError = this.pick(state => state.loginError);
+
+    validateEmail = (email: string) => {
+        const validation = this.authenticationService.VerifyAvailability(email);
+        this.setState(state => ({ ...state, validatingEmail: true, emailValid: false }));
+
+        validation.subscribe(result => this.setState(state => ({
+            ...state,
+            validatingEmail: false,
+            emailValid: result
+        })));
+
+        return validation;
+    }
 }

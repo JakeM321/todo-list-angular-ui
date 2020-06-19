@@ -10,5 +10,7 @@ export interface IAuthenticationService {
     OAuthLogin(payload: OAuthPayload): Observable<AuthResult>;
     OAuthRegister(payload: OAuthPayload): Observable<RegisterResult>;
 
+    VerifyAvailability(identifier: string): Observable<boolean>;
+
     Logout();
 }

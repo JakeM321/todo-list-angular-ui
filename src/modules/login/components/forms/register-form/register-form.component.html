@@ -4,13 +4,17 @@
         controlName="email"
         [hasLeftIcon]="true"
         [icon]="['fas', 'envelope']"
+        [hasLiveValidation]="true"
+        [isValidating]="validatingEmail"
+        [liveValidationSucceeded]="emailValid"
+        [errorMessages]="{ 'emailInUse': 'This email address is already in use.' }"
     ></app-form-field>
 
     <app-form-field
         label="Display name"
         controlName="displayName"
-        [hasLeftIcon]="false"
-        [icon]="['fa', 'userCircle']"
+        [hasLeftIcon]="true"
+        [icon]="['fas', 'user-circle']"
     ></app-form-field>
 
     <app-form-field

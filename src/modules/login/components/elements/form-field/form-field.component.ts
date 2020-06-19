@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, ControlContainer, FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, throwIfEmpty } from 'rxjs/operators';
+import _ from 'lodash';
 
 @Component({
   selector: 'app-form-field',
@@ -22,8 +23,13 @@ export class FormFieldComponent implements OnInit {
 
   @Input() errorMessages: { [key: string]: string } = {};
   public errorKeys: string[] = [];
-
   public hasErrors: Observable<boolean>;
+
+  @Input() hasLiveValidation: boolean = false;
+  @Input() isValidating: Observable<boolean> = of(false);
+  @Input() liveValidationSucceeded: Observable<boolean> = of(false);
+
+  public controlClass: string = '';
 
   ngOnInit(): void {
     this.form = <FormGroup>this.controlContainer.control;
@@ -33,32 +39,33 @@ export class FormFieldComponent implements OnInit {
     this.hasErrors = this.form.valueChanges.pipe(map(() => {
       return this.errorKeys.some(key => this.checkError(key).hasError);
     }));
+
+    if (this.hasLeftIcon) {
+      this.controlClass += ' has-icons-left';
+    }
+
+    this.isValidating.subscribe(validating => {
+      var newClass = '';
+      if (validating) {
+        newClass += 'is-loading';
+      }
+      if (this.hasLeftIcon) {
+        newClass += ' has-icons-left';
+      }
+
+      this.controlClass = newClass;
+    });
   }
 
   private checkField = (key: string): boolean => {
-    if (this.form.errors == null) {
-      return false
-    } else {
-      const keys = Object.keys(this.form.errors);
-      if (!keys.includes(this.controlName)) {
-        return false;
-      } else {
-        const errors = this.form.errors[this.controlName];
-        if (errors == null) {
-          return false;
-        } else {
-          if (!Object.keys(errors).includes(key) ) {
-            return false;
-          } else {
-            return errors[key] === true;
-          }
-        }
-      }
-    }
+    return _.get(this.form.errors, `${this.controlName}`, false)
+      || _.get(this.form.get(this.controlName), `errors.${ key }`, false); 
   }
 
   checkError = (key: string): { hasError: boolean, message: string } => ({
     hasError: this.checkField(key),
     message: this.errorMessages[key]
   });
+
+  stringify = value => JSON.stringify(value);
 }

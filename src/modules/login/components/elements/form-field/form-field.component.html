@@ -1,17 +1,21 @@
 <div class="field" [formGroup]="form" style="margin-bottom: 5px;" >
     <label class="label">{{ label }}</label>
         
-    <p class="control has-icons-left">
+    <p class="control has-icons-right" [ngClass]="controlClass">
         <input 
             class="input" 
             [type]="type"
-            [ngClass]="( (hasErrors | async) || control.invalid) && control.touched ? 'is-danger' : ''"
+            [ngClass]="( (hasErrors | async) || control.invalid) && control.touched ? 'is-danger' : (liveValidationSucceeded | async) ? 'is-success' : ''"
             [formControl]="control"
-            
         />
         <ng-container *ngIf="hasLeftIcon">
             <span class="icon is-small is-left">
                 <fa-icon [icon]="icon"></fa-icon>
+            </span>
+        </ng-container>
+        <ng-container *ngIf="liveValidationSucceeded | async">
+            <span class="icon is-small is-right">
+                <fa-icon [icon]="['fas', 'check']"></fa-icon>
             </span>
         </ng-container>
     </p>

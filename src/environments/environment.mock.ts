@@ -5,7 +5,8 @@
 import { ServerDependenciesMockModule } from 'src/modules/server-dependencies-mock/server-dependencies-mock.module';
 
 export const environment = {
-  production: false
+  production: false,
+  logStateChange: true
 };
 
 /*
