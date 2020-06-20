@@ -85,9 +85,6 @@ export class RegisterFormComponent implements OnInit {
         password: this.form.get('password').value,
         displayName: this.form.get('displayName').value
       });
-
-      this.loginService.resetEmailValidation();
-      this.form.reset();
     }
   };
 

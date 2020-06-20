@@ -7,7 +7,7 @@
         [hasLiveValidation]="true"
         [isValidating]="validatingEmail"
         [liveValidationSucceeded]="emailValid"
-        [errorMessages]="{ 'emailInUse': 'This email address is already in use.' }"
+        [errorMessages]="{ 'emailInUse': 'This email address is already in use.', 'email': 'Please enter a valid email address' }"
     ></app-form-field>
 
     <app-form-field
@@ -31,11 +31,11 @@
         controlName="confirmPassword"
         [hasLeftIcon]="true"
         [icon]="['fas', 'lock']"
-        [errorMessages]="{ 'mustMatch': 'Passwords must match.' }"
+        [errorMessages]="{ 'mustMatch': '' }"
     ></app-form-field>
 
     <br/>
     <button type="submit" class="button is-dark" [disabled]="(loading | async) || !form.valid">Sign up</button>
     <br/><br/>
-    <p>Already have an account? <a (click)="login()">Sign in</a> </p> 
+    <p class="centered">Already have an account? <a (click)="login()">Sign in</a> </p> 
 </form>

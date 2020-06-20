@@ -5,7 +5,11 @@
 import { ServerDependenciesModule } from 'src/modules/server-dependencies/server-dependencies.module';
 
 export const environment = {
-  production: false
+  production: false,
+  sso: {
+    login: '',
+    register: ''
+  }
 };
 
 /*
