@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginFormComponent } from './login-form.component';
+import { AccountService } from 'src/modules/login/services/AccountService';
+import { MockAccountService, MockFormField } from 'src/modules/login/TestingResources';
 
 describe('LoginFormComponent', () => {
   let component: LoginFormComponent;
@@ -8,7 +10,11 @@ describe('LoginFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginFormComponent ]
+      declarations: [ LoginFormComponent, MockFormField ],
+      providers: [{
+        provide: AccountService,
+        useClass: MockAccountService
+      }]
     })
     .compileComponents();
   }));

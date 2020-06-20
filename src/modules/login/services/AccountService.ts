@@ -70,6 +70,9 @@ export class AccountService extends Service<AccountServiceState> {
     );
 
     loginError = this.pick(state => state.loginError);
+    loading = this.pick(state => state.loading);
+    emailValid = this.pick(state => state.emailValid);
+    validatingEmail = this.pick(state => state.validatingEmail);
 
     validateEmail = (email: string) => {
         const validation = this.authenticationService.VerifyAvailability(email);

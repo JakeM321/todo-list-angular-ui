@@ -17,7 +17,7 @@ export class AccountUiComponent implements OnInit {
 
   screen = this.accountService.screen;
   loginError = this.accountService.loginError;
-  loading = this.accountService.pick(state => state.loading);
+  loading = this.accountService.loading;
 
   header = this.screen.pipe(map(screen => screen === 'login' ? 'Login' : 'Register'));
 

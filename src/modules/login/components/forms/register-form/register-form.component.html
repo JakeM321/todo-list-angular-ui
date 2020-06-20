@@ -35,7 +35,7 @@
     ></app-form-field>
 
     <br/>
-    <button type="submit" class="button is-dark" [disabled]="(loading | async) || !form.valid">Sign up</button>
+    <button type="submit" id="btnsubmit" class="button is-dark" [disabled]="(loading | async) || !form.valid">Sign up</button>
     <br/><br/>
     <p class="centered">Already have an account? <a (click)="login()">Sign in</a> </p> 
 </form>

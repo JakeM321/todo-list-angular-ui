@@ -15,7 +15,7 @@ export class LoginFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.accountService.pick(state => state.loading).subscribe(loading => {
+    this.accountService.loading.subscribe(loading => {
       if (loading) {
         this.form.disable();
       } else {

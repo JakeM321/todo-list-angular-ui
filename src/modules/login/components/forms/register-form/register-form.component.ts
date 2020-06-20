@@ -41,7 +41,7 @@ export class RegisterFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.accountService.pick(state => state.loading).subscribe(loading => {
+    this.accountService.loading.subscribe(loading => {
       if (loading) {
         this.form.disable();
       } else {
@@ -99,6 +99,6 @@ export class RegisterFormComponent implements OnInit {
 
   login = () => this.accountService.navigate('login');
 
-  emailValid = this.accountService.pick(state => state.emailValid);
-  validatingEmail = this.accountService.pick(state => state.validatingEmail);
+  emailValid = this.accountService.emailValid;
+  validatingEmail = this.accountService.validatingEmail;
 }
