@@ -2,11 +2,11 @@ import { Injectable, Inject } from "@angular/core";
 import { IAuthenticationService } from 'src/modules/server/services/IAuthenticationService';
 import { Service } from 'src/shared/Service';
 import { Router } from '@angular/router';
-import { PasswordAuthPayload, PasswordRegisterPayload, AuthResult, RegisterResult } from 'src/modules/server/Types';
+import { AuthResult, RegisterResult } from 'src/modules/server/Types';
 
-type Screen = 'login' | 'register' | 'register-details';
+type Screen = 'login' | 'register';
 
-interface LoginServiceState {
+interface AccountServiceState {
     screen: Screen,
     loading: boolean,
     loginError: boolean,
@@ -14,7 +14,7 @@ interface LoginServiceState {
     emailValid: boolean
 };
 
-const initialState: LoginServiceState = {
+const initialState: AccountServiceState = {
     screen: 'login',
     loading: false,
     loginError: false,
@@ -23,7 +23,7 @@ const initialState: LoginServiceState = {
 };
 
 @Injectable()
-export class LoginService extends Service<LoginServiceState> {
+export class AccountService extends Service<AccountServiceState> {
     constructor(
         @Inject('environment') environment,
         private router: Router,

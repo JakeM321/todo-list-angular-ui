@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginUiComponent } from './components/login-ui/login-ui.component';
-import { LoginService } from './services/LoginService';
+import { AccountService } from './services/AccountService';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -10,20 +9,20 @@ import { faEnvelope, faLock, faCheck, faUserCircle } from '@fortawesome/free-sol
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { LoginFormComponent } from './components/forms/login-form/login-form.component';
 import { RegisterFormComponent } from './components/forms/register-form/register-form.component';
-import { SigningFormComponent } from './components/wrappers/signing-form/signing-form.component';
 import { FormFieldComponent } from './components/elements/form-field/form-field.component';
+import { AccountUiComponent } from './components/account-ui/account-ui.component';
 
 @NgModule({
-  declarations: [LoginUiComponent, LoginFormComponent, RegisterFormComponent, SigningFormComponent, FormFieldComponent],
+  declarations: [AccountUiComponent, LoginFormComponent, RegisterFormComponent, FormFieldComponent, AccountUiComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FontAwesomeModule
   ],
-  providers: [LoginService],
-  exports: [LoginUiComponent]
+  providers: [AccountService],
+  exports: [AccountUiComponent]
 })
-export class LoginModule {
+export class AccountModule {
   constructor(library: FaIconLibrary) {
     library.addIcons(faGoogle, faEnvelope, faLock, faCheck, faUserCircle);
   }

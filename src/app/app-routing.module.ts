@@ -1,10 +1,10 @@
 import { NgModule, Inject, Injectable } from '@angular/core';
-import { Routes, RouterModule, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { LoginUiComponent } from 'src/modules/login/components/login-ui/login-ui.component';
+import { Routes, RouterModule, CanActivate, Router } from '@angular/router';
 import { DashboardUiComponent } from 'src/modules/dashboard/dashboard-ui/dashboard-ui.component';
 import { IAuthenticationService } from 'src/modules/server/services/IAuthenticationService';
 import { map } from 'rxjs/operators';
 import { ServerModule } from 'src/modules/server/server.module';
+import { AccountUiComponent } from 'src/modules/login/components/account-ui/account-ui.component';
 
 enum Mode {
   Login,
@@ -55,7 +55,7 @@ class DashboardGuard extends Guard {
 
 const routes: Routes = [{
   path: '',
-  component: LoginUiComponent,
+  component: AccountUiComponent,
   canActivate: [LoginGuard]
 
 }, {

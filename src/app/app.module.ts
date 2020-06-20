@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServerModule } from 'src/modules/server/server.module';
-import { LoginModule } from 'src/modules/login/login.module';
+import { AccountModule } from 'src/modules/login/account.module';
 import { environment } from 'src/environments/environment';
 
 @NgModule({
@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    LoginModule,
+    AccountModule,
     ServerModule
   ],
   providers: [{

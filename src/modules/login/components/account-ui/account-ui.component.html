@@ -2,9 +2,20 @@
     <div class="card">
         <div class="card-content">
             <div class="content">
-                <ng-container [ngSwitch]="screen | async">
-                    <ng-container *ngSwitchCase="'login'">
-                        <app-signing-form header="Login">
+                <div class="flex-col align-center">
+                    <h2>{{ header | async }}</h2>
+                    <br/>
+                    <button class="button is-light">
+                        <fa-icon class="button-icon" [icon]="['fab', 'google']"></fa-icon>
+                        <div style="flex-grow: 1;">
+                            Use Google account
+                        </div>
+                    </button>
+                    <br/>
+                    <p>Or</p>
+                    <br/>
+                    <ng-container [ngSwitch]="screen | async">
+                        <ng-container *ngSwitchCase="'login'">
                             <app-login-form [loading]="loading">
                                 <ng-container *ngIf="loginError | async">
                                     <div class="message is-danger">
@@ -15,17 +26,12 @@
                                     <br/>
                                 </ng-container>
                             </app-login-form>
-                        </app-signing-form>
-                    </ng-container>
-                    <ng-container *ngSwitchCase="'register'">
-                        <app-signing-form header="Sign up">
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'register'">
                             <app-register-form [loading]="loading"></app-register-form>
-                        </app-signing-form>
+                        </ng-container>
                     </ng-container>
-                    <ng-container *ngSwitchCase="'register-details'">
-                        Register details
-                    </ng-container>
-                </ng-container>
+                </div>
             </div>
         </div>
     </div>

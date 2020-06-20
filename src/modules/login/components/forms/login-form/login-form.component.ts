@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LoginService } from 'src/modules/login/services/LoginService';
+import { AccountService } from 'src/modules/login/services/AccountService';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -11,11 +11,11 @@ import { Observable } from 'rxjs';
 export class LoginFormComponent implements OnInit {
 
   constructor(
-    private loginService: LoginService
+    private accountService: AccountService
   ) { }
 
   ngOnInit(): void {
-    this.loginService.pick(state => state.loading).subscribe(loading => {
+    this.accountService.pick(state => state.loading).subscribe(loading => {
       if (loading) {
         this.form.disable();
       } else {
@@ -28,7 +28,7 @@ export class LoginFormComponent implements OnInit {
 
   onSubmit = () => {
     if (this.form.valid) {
-      this.loginService.login({
+      this.accountService.login({
         email: this.form.get('email').value,
         password: this.form.get('password').value
       });
@@ -40,5 +40,5 @@ export class LoginFormComponent implements OnInit {
     password: new FormControl('', Validators.required)
   });
 
-  register = () => this.loginService.navigate('register');
+  register = () => this.accountService.navigate('register');
 }

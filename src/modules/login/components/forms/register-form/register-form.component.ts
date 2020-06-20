@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { LoginService } from 'src/modules/login/services/LoginService';
+import { AccountService } from 'src/modules/login/services/AccountService';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
@@ -37,11 +37,11 @@ const mustMatch = (controlNames: string[]) => (formGroup: FormGroup) => {
 export class RegisterFormComponent implements OnInit {
 
   constructor(
-    private loginService: LoginService
+    private accountService: AccountService
   ) { }
 
   ngOnInit(): void {
-    this.loginService.pick(state => state.loading).subscribe(loading => {
+    this.accountService.pick(state => state.loading).subscribe(loading => {
       if (loading) {
         this.form.disable();
       } else {
@@ -57,7 +57,7 @@ export class RegisterFormComponent implements OnInit {
       filter(value => ! _.isEmpty(value))
     ).subscribe(email => {
       if (! _.get(emailField.errors, 'email', false) ) {
-        this.loginService.validateEmail(email).subscribe(available => {
+        this.accountService.validateEmail(email).subscribe(available => {
 
           const remainingErrors = () => {
             if (_.has(emailField, 'errors.emailInUse')) {
@@ -71,7 +71,7 @@ export class RegisterFormComponent implements OnInit {
           emailField.setErrors( available ? remainingErrors() : { emailInUse: true });
         });
       } else {
-        this.loginService.resetEmailValidation();
+        this.accountService.resetEmailValidation();
       }
     })
   }
@@ -80,7 +80,7 @@ export class RegisterFormComponent implements OnInit {
 
   onSubmit = () => {
     if (this.form.valid) {
-      this.loginService.register({
+      this.accountService.register({
         email: this.form.get('email').value,
         password: this.form.get('password').value,
         displayName: this.form.get('displayName').value
@@ -97,8 +97,8 @@ export class RegisterFormComponent implements OnInit {
     mustMatch(['password', 'confirmPassword'])
   ]);
 
-  login = () => this.loginService.navigate('login');
+  login = () => this.accountService.navigate('login');
 
-  emailValid = this.loginService.pick(state => state.emailValid);
-  validatingEmail = this.loginService.pick(state => state.validatingEmail);
+  emailValid = this.accountService.pick(state => state.emailValid);
+  validatingEmail = this.accountService.pick(state => state.validatingEmail);
 }
