@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { AccountService } from 'src/modules/login/services/AccountService';
+import { AccountService } from 'src/modules/account/services/AccountService';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';

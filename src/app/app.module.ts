@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServerModule } from 'src/modules/server/server.module';
-import { AccountModule } from 'src/modules/login/account.module';
+import { AccountModule } from 'src/modules/account/account.module';
 import { environment } from 'src/environments/environment';
 
 @NgModule({

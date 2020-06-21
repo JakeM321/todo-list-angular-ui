@@ -4,7 +4,7 @@ import { DashboardUiComponent } from 'src/modules/dashboard/dashboard-ui/dashboa
 import { IAuthenticationService } from 'src/modules/server/services/IAuthenticationService';
 import { map } from 'rxjs/operators';
 import { ServerModule } from 'src/modules/server/server.module';
-import { AccountUiComponent } from 'src/modules/login/components/account-ui/account-ui.component';
+import { AccountUiComponent } from 'src/modules/account/components/account-ui/account-ui.component';
 
 enum Mode {
   Login,

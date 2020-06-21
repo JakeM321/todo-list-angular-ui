@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegisterFormComponent } from './register-form.component';
-import { AccountService } from 'src/modules/login/services/AccountService';
-import { MockAccountService, MockFormField } from 'src/modules/login/TestingResources';
+import { AccountService } from 'src/modules/account/services/AccountService';
+import { MockAccountService, MockFormField } from 'src/modules/account/TestingResources';
 import { of, timer } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { By } from '@angular/platform-browser';
