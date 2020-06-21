@@ -5,8 +5,7 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-account-ui',
   templateUrl: './account-ui.component.html',
-  styleUrls: ['./account-ui.component.less'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./account-ui.component.less']
 })
 export class AccountUiComponent implements OnInit {
 

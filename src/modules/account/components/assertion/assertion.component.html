@@ -1,0 +1,11 @@
+<app-splash-screen-wrapper>
+    <div class="margin">
+        <p class="centered">
+            {{ valid ? 'Please wait while we sign you in.' : 'An unexpected issue has occured. Please wait while we redirect you.' }}
+        </p>
+        <br/><br/>
+        <div class="flex-row justify-center">
+            <fa-icon [icon]="['fas', 'spinner']" class="fa-spin fa-3x"></fa-icon>
+        </div>
+    </div>
+</app-splash-screen-wrapper>

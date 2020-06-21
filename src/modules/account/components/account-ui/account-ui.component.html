@@ -1,38 +1,32 @@
-<div class="wrapper">
-    <div class="card">
-        <div class="card-content">
-            <div class="content">
-                <div class="flex-col align-center">
-                    <h2>{{ header | async }}</h2>
-                    <br/>
-                    <button class="button is-light" (click)="navigate()">
-                        <fa-icon class="button-icon" [icon]="['fab', 'google']"></fa-icon>
-                        <div style="flex-grow: 1;">
-                            Use Google account
-                        </div>
-                    </button>
-                    <br/>
-                    <p>Or</p>
-                    <br/>
-                    <ng-container [ngSwitch]="screen | async">
-                        <ng-container *ngSwitchCase="'login'">
-                            <app-login-form [loading]="loading">
-                                <ng-container *ngIf="loginError | async">
-                                    <div class="message is-danger">
-                                        <div class="message-body">
-                                            Invalid email address or password.
-                                        </div>
-                                    </div>
-                                    <br/>
-                                </ng-container>
-                            </app-login-form>
-                        </ng-container>
-                        <ng-container *ngSwitchCase="'register'">
-                            <app-register-form [loading]="loading"></app-register-form>
-                        </ng-container>
-                    </ng-container>
-                </div>
+<app-splash-screen-wrapper>
+    <div class="flex-col align-center">
+        <h2>{{ header | async }}</h2>
+        <br/>
+        <button class="button is-light" (click)="navigate()">
+            <fa-icon class="button-icon" [icon]="['fab', 'google']"></fa-icon>
+            <div style="flex-grow: 1;">
+                Use Google account
             </div>
-        </div>
+        </button>
+        <br/>
+        <p>Or</p>
+        <br/>
+        <ng-container [ngSwitch]="screen | async">
+            <ng-container *ngSwitchCase="'login'">
+                <app-login-form [loading]="loading">
+                    <ng-container *ngIf="loginError | async">
+                        <div class="message is-danger">
+                            <div class="message-body">
+                                Invalid email address or password.
+                            </div>
+                        </div>
+                        <br/>
+                    </ng-container>
+                </app-login-form>
+            </ng-container>
+            <ng-container *ngSwitchCase="'register'">
+                <app-register-form [loading]="loading"></app-register-form>
+            </ng-container>
+        </ng-container>
     </div>
-</div>
+</app-splash-screen-wrapper>

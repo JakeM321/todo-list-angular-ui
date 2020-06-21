@@ -5,6 +5,7 @@ import { IAuthenticationService } from 'src/modules/server/services/IAuthenticat
 import { map } from 'rxjs/operators';
 import { ServerModule } from 'src/modules/server/server.module';
 import { AccountUiComponent } from 'src/modules/account/components/account-ui/account-ui.component';
+import { AssertionComponent } from 'src/modules/account/components/assertion/assertion.component';
 
 enum Mode {
   Login,
@@ -62,6 +63,14 @@ const routes: Routes = [{
   path: 'dashboard',
   component: DashboardUiComponent,
   canActivate: [DashboardGuard]
+}, {
+  path: 'assert',
+  component: AssertionComponent,
+  canActivate: [LoginGuard]
+}, {
+  path: 'assert/:code',
+  component: AssertionComponent,
+  canActivate: [LoginGuard]
 }];
 
 @NgModule({
