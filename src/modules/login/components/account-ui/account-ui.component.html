@@ -5,7 +5,7 @@
                 <div class="flex-col align-center">
                     <h2>{{ header | async }}</h2>
                     <br/>
-                    <button class="button is-light">
+                    <button class="button is-light" (click)="navigate()">
                         <fa-icon class="button-icon" [icon]="['fab', 'google']"></fa-icon>
                         <div style="flex-grow: 1;">
                             Use Google account

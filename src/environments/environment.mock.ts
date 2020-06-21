@@ -7,10 +7,7 @@ import { ServerDependenciesMockModule } from 'src/modules/server-dependencies-mo
 export const environment = {
   production: false,
   logStateChange: true,
-  sso: {
-    login: '',
-    register: ''
-  }
+  sso: ''
 };
 
 /*

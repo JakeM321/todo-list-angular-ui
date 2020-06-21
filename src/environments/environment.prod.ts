@@ -2,10 +2,7 @@ import { ServerDependenciesModule } from 'src/modules/server-dependencies/server
 
 export const environment = {
   production: true,
-  sso: {
-    login: '',
-    register: ''
-  }
+  sso: ''
 };
 
 export { ServerDependenciesModule as DependenciesModule }

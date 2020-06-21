@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
 import { AccountService } from '../../services/AccountService';
 import { map } from 'rxjs/operators';
 
@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 })
 export class AccountUiComponent implements OnInit {
 
-  constructor(private accountService: AccountService) { }
+  constructor(private accountService: AccountService, @Inject('environment') private environment) { }
 
   ngOnInit(): void {
   }
@@ -20,5 +20,9 @@ export class AccountUiComponent implements OnInit {
   loading = this.accountService.loading;
 
   header = this.screen.pipe(map(screen => screen === 'login' ? 'Login' : 'Register'));
+
+  navigate = () => {
+    window.location.href = this.environment.sso;
+  };
 
 }
