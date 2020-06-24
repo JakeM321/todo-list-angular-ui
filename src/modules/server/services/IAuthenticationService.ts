@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { AuthStatus, AuthResult, RegisterResult, PasswordAuthPayload, OAuthPayload } from '../Types';
+import { AuthStatus, AuthResult, RegisterResult, PasswordAuthPayload, OAuthPayload, WebsocketMessage } from '../Types';
 
 export interface IAuthenticationService {
     Status: Observable<AuthStatus>;
@@ -12,4 +12,6 @@ export interface IAuthenticationService {
     VerifyAvailability(identifier: string): Observable<boolean>;
 
     Logout();
+
+    websocket: Observable<WebsocketMessage>;
 }

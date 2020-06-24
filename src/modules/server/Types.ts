@@ -26,3 +26,17 @@ export interface PasswordRegisterPayload extends PasswordAuthPayload {
 export interface OAuthPayload {
     token: string;
 }
+
+export interface WebsocketMessage {
+    header: string;
+    body: string;
+}
+
+export interface Notification {
+    id: string;
+    header: string;
+    body: string;
+    isLink: boolean;
+    link: string;
+    seen: boolean;
+}

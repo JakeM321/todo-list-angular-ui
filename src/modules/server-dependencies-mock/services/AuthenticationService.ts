@@ -52,4 +52,6 @@ export class AuthenticationService extends Service<AuthenticationServiceState> i
     VerifyAvailability = (identifier: string) => of(true).pipe(delay(500));
 
     Logout = () => this.reset();
+
+    websocket = of({ header: '', body: ''});
 }
