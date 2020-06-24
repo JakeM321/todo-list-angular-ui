@@ -12,6 +12,13 @@ export class TodoListApi implements ITodoListApi {
         isLink: true,
         link: 'github.com/JakeM123',
         seen: false
+    }, {
+        id: '2',
+        header: 'Injecting websocket messages',
+        body: 'Did you know that while running this UI in mock mode, you can push notifications to the UI by mocking websocket messages? Open the developer console to find out more!',
+        isLink: false,
+        link: '',
+        seen: false
     }]);
 
     markNotificationsAsSeen = (ids: string[]) => of(true);

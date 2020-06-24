@@ -1,6 +1,6 @@
 import { NgModule, Inject, Injectable } from '@angular/core';
 import { Routes, RouterModule, CanActivate, Router } from '@angular/router';
-import { DashboardUiComponent } from 'src/modules/dashboard/dashboard-ui/dashboard-ui.component';
+import { DashboardUiComponent } from 'src/modules/dashboard/components/dashboard-ui/dashboard-ui.component';
 import { IAuthenticationService } from 'src/modules/server/services/IAuthenticationService';
 import { map } from 'rxjs/operators';
 import { ServerModule } from 'src/modules/server/server.module';

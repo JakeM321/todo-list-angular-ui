@@ -1,5 +1,5 @@
 import { async, TestBed } from '@angular/core/testing';
-import { NotificationService } from '../NotificationService';
+import { AppNotificationService } from '../AppNotificationService';
 import { IAuthenticationService } from 'src/modules/server/services/IAuthenticationService';
 import { Observable, of, Subject } from 'rxjs';
 import { AuthStatus, WebsocketMessage, Notification } from 'src/modules/server/Types';
@@ -38,9 +38,9 @@ class Api implements ITodoListApi {
 
 };
 
-describe('NotificationService', () => {
+describe('AppNotificationService', () => {
 
-  let service: NotificationService;
+  let service: AppNotificationService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -54,14 +54,14 @@ describe('NotificationService', () => {
           provide: 'ITodoListApi',
           useClass: Api
         },
-        NotificationService
+        AppNotificationService
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    service = TestBed.inject(NotificationService);
+    service = TestBed.inject(AppNotificationService);
   });
 
   it('should create', () => {

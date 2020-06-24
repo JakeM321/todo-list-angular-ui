@@ -1,0 +1,5 @@
+<div *ngIf="isOpen | async" style="position: relative;">
+    <div #content style="position: absolute;" [ngStyle]="position">
+        <ng-content></ng-content>
+    </div>
+</div>

@@ -5,16 +5,16 @@ import { Service } from 'src/shared/Service';
 import { filter } from 'rxjs/operators';
 import { ITodoListApi } from 'src/modules/server/services/ITodoListApi';
 
-interface NotificationServiceState {
+interface AppNotificationServiceState {
     notifications: Notification[]
 };
 
-const initialState: NotificationServiceState = {
+const initialState: AppNotificationServiceState = {
     notifications: []
 };
 
 @Injectable()
-export class NotificationService extends Service<NotificationServiceState> {
+export class AppNotificationService extends Service<AppNotificationServiceState> {
     constructor(
         @Inject('IAuthenticationService') private authenticationService: IAuthenticationService,
         @Inject('ITodoListApi') private api: ITodoListApi,

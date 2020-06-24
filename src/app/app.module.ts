@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { ServerModule } from 'src/modules/server/server.module';
 import { AccountModule } from 'src/modules/account/account.module';
 import { environment } from 'src/environments/environment';
+import { DashboardModule } from 'src/modules/dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { environment } from 'src/environments/environment';
     BrowserModule,
     AppRoutingModule,
     AccountModule,
-    ServerModule
+    ServerModule,
+    DashboardModule
   ],
   providers: [{
     provide: 'environment',

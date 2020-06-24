@@ -1,6 +1,6 @@
 import { IAuthenticationService } from 'src/modules/server/services/IAuthenticationService';
-import { of } from 'rxjs';
-import { AuthStatus, PasswordAuthPayload, AuthResult, OAuthPayload, RegisterResult } from 'src/modules/server/Types';
+import { of, BehaviorSubject } from 'rxjs';
+import { AuthStatus, PasswordAuthPayload, AuthResult, OAuthPayload, RegisterResult, WebsocketMessage } from 'src/modules/server/Types';
 import { Service } from 'src/shared/Service';
 import { delay } from 'rxjs/operators';
 import { Inject, Injectable } from '@angular/core';
@@ -11,10 +11,10 @@ export interface AuthenticationServiceState {
 
 const initialState: AuthenticationServiceState = {
     status: {
-        isAuthenticated: false,
+        isAuthenticated: true,
         name: {
-            first: '',
-            last: ''
+            first: 'John',
+            last: 'Smith'
         }
     }
 };
@@ -25,6 +25,22 @@ export class AuthenticationService extends Service<AuthenticationServiceState> i
         super(initialState, environment);
 
         console.log('AuthenticationService initialized');
+
+        window['pushWebsocketMessage'] = (payload: {header: string, body: string}) => this.websocket.next(payload);
+        window['pushNotification'] = ({ id, header, body }) => this.websocket.next({
+            header: 'notification',
+            body: JSON.stringify({
+                id,
+                header,
+                body,
+                isLink: false,
+                link: '',
+                seen: false
+            })
+        });
+
+        console.log('Use pushWebsocketMessage({ header, body }) to inject websocket messages.');
+        console.log('Notifications can be pushed with: pushNotification({ header: \'\', body: \'\'})');
     }
 
     Status = this.pick(state => state.status);
@@ -53,5 +69,5 @@ export class AuthenticationService extends Service<AuthenticationServiceState> i
 
     Logout = () => this.reset();
 
-    websocket = of({ header: '', body: ''});
-}
+    websocket = new BehaviorSubject<WebsocketMessage>({ header: '', body: ''});
+};
