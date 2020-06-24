@@ -14,5 +14,5 @@ export class TodoListApi implements ITodoListApi {
         seen: false
     }]);
 
-    markNotificationsAsRead = () => of(true);
+    markNotificationsAsSeen = (ids: string[]) => of(true);
 };

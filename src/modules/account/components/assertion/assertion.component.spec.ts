@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AssertionComponent } from './assertion.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRoute } from '@angular/router';
+import { MockAuthenticationService } from '../../TestingResources';
+import { BehaviorSubject, of } from 'rxjs';
 
 describe('AssertionComponent', () => {
   let component: AssertionComponent;
@@ -8,7 +12,17 @@ describe('AssertionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AssertionComponent ]
+      imports: [ RouterTestingModule ],
+      declarations: [ AssertionComponent ],
+      providers: [{
+        provide: ActivatedRoute,
+        useValue: {
+          params: of('')
+        }
+      }, {
+        provide: 'IAuthenticationService',
+        useClass: MockAuthenticationService
+      }]
     })
     .compileComponents();
   }));

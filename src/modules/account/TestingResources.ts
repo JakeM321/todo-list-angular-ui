@@ -1,5 +1,7 @@
 import { Injectable, Component, Input } from "@angular/core";
-import { BehaviorSubject, of, Observable } from "rxjs";
+import { BehaviorSubject, of, Observable, Subject } from "rxjs";
+import { IAuthenticationService } from '../server/services/IAuthenticationService';
+import { PasswordAuthPayload, OAuthPayload, AuthStatus, WebsocketMessage } from '../server/Types';
 
 @Injectable()
 export class MockAccountService {
@@ -18,6 +20,18 @@ export class MockAccountService {
     validatingEmail =  of(false);
 
     validateEmail = () => of(false);
+};
+
+@Injectable()
+export class MockAuthenticationService implements IAuthenticationService {
+  Status = of({ isAuthenticated: true, name: { first: '', last: '' }});
+  Login = payload => of({ success: true });
+  Register = payload => of({ success: true, accountAlreadyInUse: false })
+  OAuth = payload => of({ success: true });
+  VerifyAvailability = payload => of(true);
+  Logout = () => {};
+
+  websocket = new Subject<WebsocketMessage>();
 };
 
 @Component({

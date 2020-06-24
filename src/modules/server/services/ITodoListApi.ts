@@ -3,5 +3,5 @@ import { Notification } from '../Types';
 
 export interface ITodoListApi {
     loadNotifications(): Observable<Notification[]>;
-    markNotificationsAsRead(notifications: string[]): Observable<boolean>;
+    markNotificationsAsSeen(notifications: string[]): Observable<boolean>;
 };

@@ -15,6 +15,9 @@ describe('AccountUiComponent', () => {
       providers: [{
         provide: AccountService,
         useClass: MockAccountService
+      }, {
+        provide: 'environment',
+        useValue: {}
       }]
     })
     .compileComponents();
