@@ -1,9 +1,6 @@
 export interface AuthStatus {
     isAuthenticated: boolean;
-    name: {
-        first: string;
-        last: string;
-    }
+    displayName: string;
 }
 
 export interface AuthResult {

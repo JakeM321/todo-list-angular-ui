@@ -7,7 +7,7 @@
     </div>
 </div>
 <app-anchor-window [position]="{ 'top': '-10px', 'right': '10px' }" [control]="notificationButton" [isOpen]="notificationsOpen" (close)="toggleNotifications()">
-    <div class="drop-menu">
+    <div class="drop-menu notification-menu">
         <h3 class="subtitle is-3">Notifications</h3>
         <div style="margin-top: 30px; margin-bottom: 30px;" *ngFor="let item of notifications | async">
             <h5 class="subtitle is-5">{{ item.header }}</h5>

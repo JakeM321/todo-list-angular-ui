@@ -8,11 +8,12 @@ import { NavbarComponent } from './components/widgets/navbar/navbar.component';
 import { NotificationMenuComponent } from './components/widgets/notification-menu/notification-menu.component';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { UserMenuComponent } from './components/widgets/user-menu/user-menu.component';
 
 
 
 @NgModule({
-  declarations: [DashboardUiComponent, AnchorWindowComponent, NavbarComponent, NotificationMenuComponent],
+  declarations: [DashboardUiComponent, AnchorWindowComponent, NavbarComponent, NotificationMenuComponent, UserMenuComponent],
   imports: [
     CommonModule,
     FontAwesomeModule

@@ -1,0 +1,20 @@
+@import 'styles.less';
+
+.avatar {
+    .flex-row;
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+    border-radius: 35px;
+    background: var(--colour-avatar);
+    color: white;
+    cursor: pointer;
+}
+
+@media all and (min-width: @sizes[mobile]) {
+    .user-menu {
+        width: 300px;
+    }
+}

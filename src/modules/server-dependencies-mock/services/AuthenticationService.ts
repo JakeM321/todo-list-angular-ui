@@ -12,10 +12,7 @@ export interface AuthenticationServiceState {
 const initialState: AuthenticationServiceState = {
     status: {
         isAuthenticated: true,
-        name: {
-            first: 'John',
-            last: 'Smith'
-        }
+        displayName: 'John Smith'
     }
 };
 
@@ -50,10 +47,7 @@ export class AuthenticationService extends Service<AuthenticationServiceState> i
             ...state,
             status: {
                 isAuthenticated: true,
-                name: {
-                    first: 'John',
-                    last: 'Smith'
-                }
+                displayName: 'John Smith'
             }
         }));
 
@@ -67,7 +61,7 @@ export class AuthenticationService extends Service<AuthenticationServiceState> i
 
     VerifyAvailability = (identifier: string) => of(true).pipe(delay(500));
 
-    Logout = () => this.reset();
+    Logout = () => this.setState(state => ({ ...state, status: { isAuthenticated: false, displayName: '' }}));
 
     websocket = new BehaviorSubject<WebsocketMessage>({ header: '', body: ''});
 };

@@ -55,6 +55,10 @@ class DashboardGuard extends Guard {
 
 
 const routes: Routes = [{
+  path: 'logout',
+  redirectTo: '',
+  pathMatch: 'full'
+},{
   path: '',
   component: AccountUiComponent,
   canActivate: [LoginGuard]

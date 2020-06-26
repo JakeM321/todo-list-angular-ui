@@ -1,0 +1,10 @@
+<div #useravatar class="avatar" (click)="toggle()"> {{ initial | async }} </div>
+<app-anchor-window [position]="{ 'top': '7px', 'right': '0px' }" [control]="userAvatar" [isOpen]="menuOpen" (close)="toggle()">
+    <div class="drop-menu user-menu">
+        <div class="flex-col">
+            <p class="centered">{{ name | async }}</p>
+            <br/><br/>
+            <button class="button is-dark" (click)="logout()">Sign out</button>
+        </div>
+    </div>
+</app-anchor-window>

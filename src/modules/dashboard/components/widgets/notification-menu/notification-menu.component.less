@@ -1,3 +1,5 @@
+@import 'styles.less';
+
 .badge-anchor {
     position: relative;
 }
@@ -12,4 +14,11 @@
     height: 22px;
     border-radius: 22px;
     text-align: center;
+}
+
+@media all and (min-width: @sizes[mobile]) {
+    .notification-menu {
+        width: 300px;
+        max-height: 600px;
+    }
 }
