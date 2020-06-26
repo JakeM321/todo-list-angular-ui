@@ -1,0 +1,76 @@
+@import 'styles.less';
+
+.side-menu {
+    background: var(--colour-menu-main);
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    z-index: 3;
+}
+
+.title {
+    margin: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+a, .menu-label {
+    color: var(--colour-menu-main-secondary);
+}
+
+.margin {
+    margin: 20px;
+}
+
+.primary {
+    color: var(--colour-menu-main-primary);
+}
+
+.is-active, a:hover {
+    background-color: var(--colour-menu-main-active) !important;
+    color: var(--colour-menu-main-primary) !important;
+}
+
+.icon-wrapper {
+    width: 40px;
+    padding: 10px;
+}
+
+.fill {
+    width: 100%;
+}
+
+.toggle-icon {
+    margin: 20px;
+    cursor: pointer;
+}
+
+.collapsed {
+    left: -100vw;
+}
+
+.expanded {
+    left: 0;
+}
+
+.expanded, .collapsed {
+    transition: left 1s linear;
+}
+
+.re-open {
+    position: absolute;
+    left: 0;
+    top: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+@media all and (max-width: @sizes[mobile]) {
+    .side-menu {
+        width: 100vw;
+    }
+
+    .expanded, .collapsed {
+        transition: left .5s linear;
+    }
+}

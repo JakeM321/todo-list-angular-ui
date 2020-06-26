@@ -4,11 +4,13 @@ import { Service } from 'src/shared/Service';
 export interface DashboardUiServiceState {
     notificationsOpen: boolean;
     userMenuOpen: boolean;
+    sideMenuOpen: boolean;
 };
 
 const initialState: DashboardUiServiceState = {
     notificationsOpen: false,
-    userMenuOpen: false
+    userMenuOpen: false,
+    sideMenuOpen: true
 };
 
 @Injectable()
@@ -24,4 +26,7 @@ export class DashboardUiService extends Service<DashboardUiServiceState> {
 
     userMenuOpen = this.pick(state => state.userMenuOpen);
     toggleUserMenu = () => this.setState(state => ({ ...state, userMenuOpen: !state.userMenuOpen }));
+
+    sideMenuOpen = this.pick(state => state.sideMenuOpen);
+    toggleSideMenu = () => this.setState(state => ({ ...state, sideMenuOpen: !state.sideMenuOpen }));
 };

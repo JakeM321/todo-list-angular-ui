@@ -7,13 +7,14 @@ import { DashboardUiService } from './services/DashboardUiService';
 import { NavbarComponent } from './components/widgets/navbar/navbar.component';
 import { NotificationMenuComponent } from './components/widgets/notification-menu/notification-menu.component';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faBars, faHome, faTasks, faChalkboard } from '@fortawesome/free-solid-svg-icons';
 import { UserMenuComponent } from './components/widgets/user-menu/user-menu.component';
+import { SideMenuComponent } from './components/widgets/side-menu/side-menu.component';
 
 
 
 @NgModule({
-  declarations: [DashboardUiComponent, AnchorWindowComponent, NavbarComponent, NotificationMenuComponent, UserMenuComponent],
+  declarations: [DashboardUiComponent, AnchorWindowComponent, NavbarComponent, NotificationMenuComponent, UserMenuComponent, SideMenuComponent],
   imports: [
     CommonModule,
     FontAwesomeModule
@@ -23,6 +24,6 @@ import { UserMenuComponent } from './components/widgets/user-menu/user-menu.comp
 })
 export class DashboardModule {
   constructor(library: FaIconLibrary) {
-    library.addIcons(faBell);
+    library.addIcons(faBell, faBars, faHome, faTasks, faChalkboard);
   }
 }

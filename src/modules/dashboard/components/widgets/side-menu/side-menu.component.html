@@ -1,0 +1,33 @@
+<div class="side-menu" [ngClass]="(open | async) ? 'expanded' : 'collapsed'">
+    <aside class="menu">
+        <div class="flex-row align-center space-between">
+            <h4 class="title is-4 primary">Todo list app</h4>
+            <fa-icon (click)="toggle()" class="fa-2x primary toggle-icon" [icon]="['fas', 'bars']"></fa-icon>
+        </div>
+        <ul class="menu-list">
+            <li *ngFor = "let item of menuLinks | async">
+                <div class="flex-row align-center menuitem-wrapper">
+                    <a class="fill" [ngClass]="item.active ? 'is-active' : ''">
+                        <div class="flex-row align-center">
+                            <div class="icon-wrapper">
+                                <fa-icon [icon]="item.icon"></fa-icon>
+                            </div>
+                            <div class="primary">{{ item.label }}</div>
+                        </div>
+                    </a>
+                </div>
+            </li>
+          </ul>
+          <div class="margin">
+            <p class="menu-label">
+                Favourites
+              </p>
+              <ng-container *ngIf="(favourites | async).length === 0">
+                <p class="primary">Projects that you favourite will appear here</p>
+              </ng-container>
+          </div>
+    </aside>
+</div>
+<div *ngIf="!(open | async)" class="re-open margin">
+    <fa-icon (click)="toggle()" class="fa-2x" [icon]="['fas', 'bars']"></fa-icon>
+</div>
