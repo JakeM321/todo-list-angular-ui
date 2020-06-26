@@ -16,9 +16,52 @@
     text-align: center;
 }
 
+.notification-heading {
+    margin: 10px;
+}
+
+.notification-item {
+    padding-bottom: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: white;
+    &:hover {
+        background: var(--colour-highlight);
+    }
+}
+
+.notification-menu {
+    overflow-y: scroll;
+}
+
 @media all and (min-width: @sizes[mobile]) {
     .notification-menu {
         width: 300px;
-        max-height: 600px;
+        max-height: 800px;
     }
+
+}
+
+.scroll-custom::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scroll-custom::-webkit-scrollbar-track {
+    background-color: #f1f1f1; 
+    transition: .5s ease-in-out;
+}
+
+.scroll-custom::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+    transition: .5s ease-in-out;
+}
+
+.scroll-custom::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+.scroll-hidden::-webkit-scrollbar-track, .scroll-hidden::-webkit-scrollbar-thumb {
+    background-color: white;
+    transition: .5s ease-in-out;
 }

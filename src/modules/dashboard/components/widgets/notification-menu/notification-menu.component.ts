@@ -1,6 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { AppNotificationService } from 'src/modules/dashboard/services/AppNotificationService';
 import { DashboardUiService } from 'src/modules/dashboard/services/DashboardUiService';
+import { take } from 'rxjs/operators';
+import _ from 'lodash';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-notification-menu',
@@ -10,22 +13,36 @@ import { DashboardUiService } from 'src/modules/dashboard/services/DashboardUiSe
 export class NotificationMenuComponent implements OnInit {
 
   @ViewChild('notificationbtn') notificationButton: ElementRef;
+  @ViewChild('notificationmenu') notificationMenu: ElementRef;
 
   constructor(
     private notificationService: AppNotificationService,
-    private dashboardUiService: DashboardUiService
+    private dashboardUiService: DashboardUiService,
+    private renderer: Renderer2
   ) { }
 
-  notifications = this.notificationService.notifications;
+  public scrollClass = new BehaviorSubject<string>('scroll-hidden');
+
+  notifications = this.notificationService.notifications.pipe(take(5));
   notificationCount = this.notificationService.unseenCount;
   notificationsOpen = this.dashboardUiService.notificationsOpen;
+
   toggleNotifications = () => {
     this.dashboardUiService.toggleNotifications();
     this.notificationService.markAllAsSeen();
   }
 
-  ngOnInit(){
+  ngOnInit(): void {
+    this.renderer.listen('window', 'mousemove', (e: Event) => {
+      if (_.has(this.notificationMenu, 'nativeElement')) {
+        const newValue = this.notificationMenu.nativeElement.contains(e.target) ? 'scroll-showing' : 'scroll-hidden';
+        if (newValue !== this.scrollClass.value) {
+          this.scrollClass.next(newValue);
+        }
+      }
+    });
 
+    this.scrollClass.subscribe(s => console.log(s));
   }
 
 }
