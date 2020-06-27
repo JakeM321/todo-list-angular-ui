@@ -7,7 +7,7 @@
         <ul class="menu-list">
             <li *ngFor = "let item of menuLinks | async">
                 <div class="flex-row align-center menuitem-wrapper">
-                    <a class="fill" [ngClass]="item.active ? 'is-active' : ''">
+                    <a class="fill" [ngClass]="item.active ? 'is-active' : ''" [routerLink]="item.link" >
                         <div class="flex-row align-center">
                             <div class="icon-wrapper">
                                 <fa-icon [icon]="item.icon"></fa-icon>

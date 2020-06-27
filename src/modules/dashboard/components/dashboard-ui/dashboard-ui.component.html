@@ -1,2 +1,8 @@
-<app-navbar></app-navbar>
 <app-side-menu></app-side-menu>
+<app-navbar></app-navbar>
+
+<div class="content" [ngClass]="(sideMenuOpen | async) ? 'with-menu' : ''">
+    <div class="page-margin">
+        <router-outlet></router-outlet>
+    </div>
+</div>

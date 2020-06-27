@@ -10,6 +10,7 @@ import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontaweso
 import { faBell, faBars, faHome, faTasks, faChalkboard } from '@fortawesome/free-solid-svg-icons';
 import { UserMenuComponent } from './components/widgets/user-menu/user-menu.component';
 import { SideMenuComponent } from './components/widgets/side-menu/side-menu.component';
+import { DashboardRoutingModule } from './dashboard-routing.module';
 
 
 
@@ -17,7 +18,8 @@ import { SideMenuComponent } from './components/widgets/side-menu/side-menu.comp
   declarations: [DashboardUiComponent, AnchorWindowComponent, NavbarComponent, NotificationMenuComponent, UserMenuComponent, SideMenuComponent],
   imports: [
     CommonModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    DashboardRoutingModule
   ],
   providers: [ AppNotificationService, DashboardUiService ],
   exports: [ DashboardUiComponent ]

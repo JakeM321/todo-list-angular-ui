@@ -66,7 +66,8 @@ const routes: Routes = [{
 }, {
   path: 'dashboard',
   component: DashboardUiComponent,
-  canActivate: [DashboardGuard]
+  canActivate: [DashboardGuard],
+  loadChildren: () => import('../modules/dashboard/dashboard.module').then(m => m.DashboardModule)
 }, {
   path: 'assert',
   component: AssertionComponent,

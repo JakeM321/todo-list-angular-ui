@@ -1,3 +1,27 @@
+@import 'styles.less';
+
 :root {
     background-color: var(--colour-dashboard-bg);
+}
+
+.content {
+    .flex-row();
+    .justify-center();
+}
+
+.page-margin {
+    display: flex;
+    flex-grow: 1;
+    max-width: 1000px;
+    padding: 20px;
+}
+
+@media all and (min-width: @sizes[mobile]) {
+    .content {
+        transition: margin-left .35s ease-in-out;
+    }
+    
+    .with-menu {
+        margin-left: 300px;
+    }
 }
