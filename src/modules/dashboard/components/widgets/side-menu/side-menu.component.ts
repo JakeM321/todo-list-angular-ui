@@ -4,6 +4,7 @@ import { DashboardUiService } from 'src/modules/dashboard/services/DashboardUiSe
 import { Router, ActivatedRoute, NavigationStart } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import _ from 'lodash';
+import { ifMobile } from 'src/modules/dashboard/utils';
 
 @Component({
   selector: 'app-side-menu',
@@ -49,4 +50,8 @@ export class SideMenuComponent implements OnInit {
   }].map(item => ({ ...item, active: this.router.url.replace('/dashboard', '.') === item.link })));
 
   favourites = of([])
+
+  useLink = () => {
+    ifMobile(this.dashboardUiService.toggleSideMenu);
+  }
 }

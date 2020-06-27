@@ -3,6 +3,7 @@ import { AppNotificationService } from '../../services/AppNotificationService';
 import { DashboardUiService } from '../../services/DashboardUiService';
 import _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
+import { ifMobile } from '../../utils';
 
 @Component({
   selector: 'app-dashboard-ui',
@@ -20,11 +21,7 @@ export class DashboardUiComponent implements OnInit {
   ngOnInit(): void {
     this.notificationService.initialize();
 
-    const mobileWidth: any = getComputedStyle(document.documentElement).getPropertyValue('--width-mobile').replace('px', '');
-
-    if (window.innerWidth <= mobileWidth) {
-      this.dashboardUiService.toggleSideMenu();
-    }
+    ifMobile(this.dashboardUiService.toggleSideMenu);
   };
 
   isMobileView = new BehaviorSubject<boolean>(false);

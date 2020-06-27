@@ -13,7 +13,7 @@
             </div>
             <div *ngIf="!tile.isTemplate" class="icon-wrapper">
                 <fa-icon 
-                    class="fav-icon fa-lg"
+                    class="fav-icon"
                     (mouseover)="hoveredStar = tile.id"
                     (mouseout)="hoveredStar = -1"
                     [icon]="[tile.favourite || hoveredStar === tile.id ? 'fas' : 'far', 'star']"
