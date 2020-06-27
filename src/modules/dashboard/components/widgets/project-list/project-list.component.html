@@ -1,0 +1,25 @@
+<div class="flex-row wrap">
+    <div *ngFor = "let tile of tiles | async" class="tile-container">
+        <div class="tile"
+            (mouseover)="hoveredTile = tile.id"
+            (mouseout)="hoveredTile = -1"
+            [ngClass]="tile.isTemplate ? 'template-tile': ''"
+            [ngStyle]="{ background: hoveredTile === tile.id ? tile.colour.alt : tile.colour.primary }"
+        >
+            <div *ngIf="tile.isTemplate" class="flex-col justify-center" style="flex-grow: 1; height: 100%;">
+                <div class="flex-row justify-center" style="width: 100%;">
+                    <fa-icon [icon]="['fas', 'plus']" class="fa-2x"></fa-icon>
+                </div>
+            </div>
+            <div *ngIf="!tile.isTemplate" class="icon-wrapper">
+                <fa-icon 
+                    class="fav-icon fa-lg"
+                    (mouseover)="hoveredStar = tile.id"
+                    (mouseout)="hoveredStar = -1"
+                    [icon]="[tile.favourite || hoveredStar === tile.id ? 'fas' : 'far', 'star']"
+                ></fa-icon>
+            </div>
+        </div>
+        <p class="centered">{{tile.label}}</p>
+    </div>
+</div>

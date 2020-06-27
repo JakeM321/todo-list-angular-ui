@@ -1,5 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule, Component } from '@angular/core';
+import { MainViewComponent } from './components/views/main-view/main-view.component';
 
 @Component({
     template: '<p>Placeholder</p>'
@@ -7,7 +8,7 @@ import { NgModule, Component } from '@angular/core';
 
 const routes: Routes = [{
     path: '',
-    component: PlaceholderComponent
+    component: MainViewComponent
   }, {
     path: 'tasks',
     component: PlaceholderComponent
