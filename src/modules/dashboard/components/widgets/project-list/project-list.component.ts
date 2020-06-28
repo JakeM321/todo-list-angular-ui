@@ -23,12 +23,25 @@ export class ProjectListComponent implements OnInit {
 
   tiles = this.projectService.projects.pipe(
     map(projects => projects.map(project => ({
-      ...project,
-      colour: {
-        primary: project.colour,
-        alt: Color(project.colour).lighten(0.3)
-      }
-    })))
+          ...project,
+          colour: {
+            primary: project.colour,
+            alt: Color(project.colour).lighten(0.3)
+          },
+          isTemplate: false
+        })
+      ).concat([{
+        id: 'new',
+        isTemplate: true,
+        title: 'New Project',
+        colour: {
+          primary: 'white',
+          alt: 'white'
+        },
+        isFavourite: false,
+        belongsToUser: true
+      }])
+    )
   );
 
   toggleFavourite = this.projectService.toggleFavourite;
