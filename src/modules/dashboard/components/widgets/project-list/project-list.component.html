@@ -16,10 +16,11 @@
                     class="fav-icon"
                     (mouseover)="hoveredStar = tile.id"
                     (mouseout)="hoveredStar = -1"
-                    [icon]="[tile.favourite || hoveredStar === tile.id ? 'fas' : 'far', 'star']"
+                    [icon]="[tile.isFavourite || hoveredStar === tile.id ? 'fas' : 'far', 'star']"
+                    (click)="toggleFavourite(tile.id)"
                 ></fa-icon>
             </div>
         </div>
-        <p class="centered">{{tile.label}}</p>
+        <p class="centered">{{tile.title}}</p>
     </div>
 </div>

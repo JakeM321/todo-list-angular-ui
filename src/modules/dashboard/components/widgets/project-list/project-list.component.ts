@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { of } from 'rxjs';
+import { ProjectService } from 'src/modules/dashboard/services/ProjectService';
+import { map } from 'rxjs/operators';
+import Color from 'color';
 
 @Component({
   selector: 'app-project-list',
@@ -8,7 +11,9 @@ import { of } from 'rxjs';
 })
 export class ProjectListComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private projectService: ProjectService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -16,33 +21,16 @@ export class ProjectListComponent implements OnInit {
   hoveredTile = -1;
   hoveredStar = -1;
 
-  tiles = of([{
-    id: '0',
-    isTemplate: false,
-    label: 'Project 1',
-    colour: {
-      primary: 'rgb(211, 13, 211)',
-      alt: 'rgb(209, 59, 209)'
-    },
-    favourite: true
-  }, {
-    id: '1',
-    isTemplate: false,
-    label: 'Project 2',
-    colour: {
-      primary: 'rgb(7, 182, 123)',
-      alt: 'rgb(91, 179, 149)'
-    },
-    favourite: false
-  }, {
-    id: 'new',
-    isTemplate: true,
-    label: 'New Project',
-    colour: {
-      primary: 'white',
-      alt: 'white'
-    },
-    favourite: false
-  }])
+  tiles = this.projectService.projects.pipe(
+    map(projects => projects.map(project => ({
+      ...project,
+      colour: {
+        primary: project.colour,
+        alt: Color(project.colour).lighten(0.3)
+      }
+    })))
+  );
+
+  toggleFavourite = this.projectService.toggleFavourite;
 
 }

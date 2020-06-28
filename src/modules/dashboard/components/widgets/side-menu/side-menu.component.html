@@ -25,6 +25,20 @@
               <ng-container *ngIf="(favourites | async).length === 0">
                 <p class="primary">Projects that you favourite will appear here</p>
               </ng-container>
+              <ul class="menu-list">
+                  <li *ngFor="let favourite of favourites | async">
+                    <div class="flex-row align-center menuitem-wrapper">
+                        <a class="fill" >
+                            <div class="flex-row align-center">
+                                <div class="colour-box" [ngStyle]="{background: favourite.colour}">
+                                    
+                                </div>
+                                <div class="primary">{{ favourite.title }}</div>
+                            </div>
+                        </a>
+                    </div>
+                  </li>
+              </ul>
           </div>
     </aside>
 </div>

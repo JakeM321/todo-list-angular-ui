@@ -1,7 +1,37 @@
-import { ITodoListApi } from 'src/modules/server/services/ITodoListApi';
+import { ITodoListApi, ProjectListQuery } from 'src/modules/server/services/ITodoListApi';
 import { of, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Notification } from 'src/modules/server/Types';
+import { Notification, ProjectInfo } from 'src/modules/server/Types';
+
+const colours = [
+    'rgb(211, 13, 211)',
+    'rgb(7, 182, 123)',
+    'rgb(3, 180, 171)'
+];
+
+const getColour = (index: number) => colours[index % colours.length];
+
+const testProjects: ProjectInfo[] = [{
+    id: '1',
+    title: 'Project 1',
+    belongsToUser: true,
+    isFavourite: true
+}, {
+    id: '2',
+    title: 'Project 2',
+    belongsToUser: true,
+    isFavourite: false
+}, {
+    id: '3',
+    title: 'Project 3',
+    belongsToUser: false,
+    isFavourite: false
+}, {
+    id: '4',
+    title: 'Project 4',
+    belongsToUser: false,
+    isFavourite: false
+}].map((item, index) => ({ ...item, colour: getColour(index) }));
 
 @Injectable()
 export class TodoListApi implements ITodoListApi {
@@ -22,4 +52,14 @@ export class TodoListApi implements ITodoListApi {
     }]);
 
     markNotificationsAsSeen = (ids: string[]) => of(true);
+
+    listProjects = (query: ProjectListQuery) => of(
+        testProjects.filter(project => {
+            const passesUserFilter = (query.belongingToUser && project.belongsToUser) || !query.belongingToUser;
+            const passesFavouritesFilter = (query.favouritesOnly && project.isFavourite) || !query.favouritesOnly;
+            const passesQueryString = (query.filter !== '' && project.title.includes(query.filter)) || query.filter === '';
+
+            return passesUserFilter && passesFavouritesFilter && passesQueryString;
+        }).splice(query.skip, query.take)
+    );
 };

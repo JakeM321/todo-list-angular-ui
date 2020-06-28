@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardUiComponent } from './components/dashboard-ui/dashboard-ui.component';
 import { AppNotificationService } from './services/AppNotificationService';
@@ -14,8 +14,6 @@ import { SideMenuComponent } from './components/widgets/side-menu/side-menu.comp
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { MainViewComponent } from './components/views/main-view/main-view.component';
 import { ProjectListComponent } from './components/widgets/project-list/project-list.component';
-
-
 
 @NgModule({
   declarations: [DashboardUiComponent, AnchorWindowComponent, NavbarComponent, NotificationMenuComponent, UserMenuComponent, SideMenuComponent, MainViewComponent, ProjectListComponent],

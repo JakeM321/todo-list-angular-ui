@@ -37,3 +37,11 @@ export interface Notification {
     link: string;
     seen: boolean;
 }
+
+export interface ProjectInfo {
+    id: string;
+    title: string;
+    colour: string;
+    belongsToUser: boolean;
+    isFavourite: boolean;
+}

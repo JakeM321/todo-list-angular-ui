@@ -5,6 +5,7 @@ import { Router, ActivatedRoute, NavigationStart } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import _ from 'lodash';
 import { ifMobile } from 'src/modules/dashboard/utils';
+import { ProjectService } from 'src/modules/dashboard/services/ProjectService';
 
 @Component({
   selector: 'app-side-menu',
@@ -15,7 +16,8 @@ export class SideMenuComponent implements OnInit {
 
   constructor(
     private dashboardUiService: DashboardUiService,
-    private router: Router
+    private router: Router,
+    private projectService: ProjectService
   ) { }
 
   ngOnInit(): void {
@@ -49,7 +51,7 @@ export class SideMenuComponent implements OnInit {
     icon: ['fas', 'bell']
   }].map(item => ({ ...item, active: this.router.url.replace('/dashboard', '.') === item.link })));
 
-  favourites = of([])
+  favourites = this.projectService.projects.pipe(map(projects => projects.filter(project => project.isFavourite)));
 
   useLink = () => {
     ifMobile(this.dashboardUiService.toggleSideMenu);
