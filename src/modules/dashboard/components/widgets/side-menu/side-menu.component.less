@@ -2,11 +2,11 @@
 
 .side-menu {
     background: var(--colour-menu-main);
-    position: absolute;
+    position: fixed;
     top: 0;
     height: 100vh;
     width: 300px;
-    z-index: 3;
+    z-index: 4;
 }
 
 .title {
@@ -47,23 +47,26 @@ a, .menu-label {
 }
 
 .collapsed {
-    left: -300px;
+    transform: translateX(-100%);
 }
 
 .expanded {
-    left: 0;
+    transform: translateX(0%);
 }
 
 .expanded, .collapsed {
-    transition: left .35s ease-in-out;
+    transition: transform .35s ease-in-out;
 }
 
 .re-open {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     cursor: pointer;
     z-index: 2;
+    padding: 20px;
+    width: 100vw;
+    background: white;
 }
 
 .colour-box {
@@ -76,9 +79,5 @@ a, .menu-label {
 @media all and (max-width: @sizes[mobile]) {
     .side-menu {
         width: 100vw;
-    }
-
-    .collapsed {
-        left: -100vw;
     }
 }
