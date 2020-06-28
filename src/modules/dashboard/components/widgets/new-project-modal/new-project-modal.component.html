@@ -1,0 +1,27 @@
+<div class="modal" [ngClass]="(menuOpen | async) ? 'is-active' : ''" style="z-index: 5;">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="panel is-dark">
+            <div class="panel-heading">
+                New Project
+            </div>
+            <div class="panel-block" style="background: white;">
+                <form [formGroup]="form" (ngSubmit)="onSubmit()" style="flex-grow: 1;">
+                    <div class="flex-row align-center">
+                        <label class="label" style="width: 200px;">Project name:</label>
+                        <input class="input" formControlName="name" />
+                    </div>
+                    <br/>
+                    <label class="label">Choose a colour:</label>
+                    <color-twitter [color]="colour | async" (onChange)="updateColour($event)"></color-twitter>
+                    <br/>
+                    <div class="flex-row space-between">
+                        <button class="button is-primary" [disabled]="(loading | async) || !form.valid">Create</button>
+                        <button class="button is-light" (click)="close()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close" (click)="close()"></button>
+</div>

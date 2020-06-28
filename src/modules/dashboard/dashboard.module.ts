@@ -16,15 +16,21 @@ import { MainViewComponent } from './components/views/main-view/main-view.compon
 import { ProjectListComponent } from './components/widgets/project-list/project-list.component';
 import { ProjectViewComponent } from './components/views/project-view/project-view.component';
 import { LoadingSpinnerComponent } from './components/elements/loading-spinner/loading-spinner.component';
+import { NewProjectModalComponent } from './components/widgets/new-project-modal/new-project-modal.component';
+import { ColorTwitterModule } from 'ngx-color/twitter'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [DashboardUiComponent, AnchorWindowComponent, NavbarComponent, NotificationMenuComponent, UserMenuComponent, SideMenuComponent, MainViewComponent, ProjectListComponent, ProjectViewComponent, LoadingSpinnerComponent],
+  declarations: [DashboardUiComponent, AnchorWindowComponent, NavbarComponent, NotificationMenuComponent, UserMenuComponent, SideMenuComponent, MainViewComponent, ProjectListComponent, ProjectViewComponent, LoadingSpinnerComponent, NewProjectModalComponent],
   imports: [
     CommonModule,
     FontAwesomeModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    ColorTwitterModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [ AppNotificationService, DashboardUiService ],
+  providers: [ AppNotificationService ],
   exports: [ DashboardUiComponent ]
 })
 export class DashboardModule {

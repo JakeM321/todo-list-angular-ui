@@ -5,15 +5,19 @@ export interface DashboardUiServiceState {
     notificationsOpen: boolean;
     userMenuOpen: boolean;
     sideMenuOpen: boolean;
+    newProjectModalOpen: boolean;
 };
 
 const initialState: DashboardUiServiceState = {
     notificationsOpen: false,
     userMenuOpen: false,
-    sideMenuOpen: true
+    sideMenuOpen: true,
+    newProjectModalOpen: false
 };
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class DashboardUiService extends Service<DashboardUiServiceState> {
     constructor(
         @Inject('environment') environment: any
@@ -29,4 +33,7 @@ export class DashboardUiService extends Service<DashboardUiServiceState> {
 
     sideMenuOpen = this.pick(state => state.sideMenuOpen);
     toggleSideMenu = () => this.setState(state => ({ ...state, sideMenuOpen: !state.sideMenuOpen }));
+
+    newProjectMenuOpen = this.pick(state => state.newProjectModalOpen);
+    toggleNewProjectMenu = () => this.setState(state => ({ ...state, newProjectModalOpen: !state.newProjectModalOpen }));
 };

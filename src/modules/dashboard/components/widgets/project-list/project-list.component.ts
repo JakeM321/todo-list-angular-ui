@@ -3,6 +3,7 @@ import { of } from 'rxjs';
 import { ProjectService } from 'src/modules/dashboard/services/ProjectService';
 import { map } from 'rxjs/operators';
 import Color from 'color';
+import { DashboardUiService } from 'src/modules/dashboard/services/DashboardUiService';
 
 @Component({
   selector: 'app-project-list',
@@ -12,7 +13,8 @@ import Color from 'color';
 export class ProjectListComponent implements OnInit {
 
   constructor(
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private dashboardUiService: DashboardUiService
   ) { }
 
   ngOnInit(): void {
@@ -48,5 +50,7 @@ export class ProjectListComponent implements OnInit {
     event.preventDefault();
     this.projectService.toggleFavourite(tileId);
   };
+
+  newProject = this.dashboardUiService.toggleNewProjectMenu;
 
 }
