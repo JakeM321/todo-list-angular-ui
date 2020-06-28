@@ -28,7 +28,7 @@ export class ProjectListComponent implements OnInit {
           ...project,
           colour: {
             primary: project.colour,
-            alt: Color(project.colour).lighten(0.3)
+            alt: Color(project.colour).lighten(0.1)
           },
           isTemplate: false
         })
