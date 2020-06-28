@@ -8,9 +8,12 @@ import { ProjectService } from 'src/modules/dashboard/services/ProjectService';
 })
 export class MainViewComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private projectService: ProjectService
+  ) { }
 
   ngOnInit(): void {
+    this.projectService.loadPreviewList();
   }
 
 }

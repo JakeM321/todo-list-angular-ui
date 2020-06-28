@@ -46,6 +46,23 @@ export interface ProjectInfo {
     isFavourite: boolean;
 }
 
+export interface ProjectListQuery {
+    skip: number;
+    take: number;
+    favouritesOnly: boolean;
+    belongingToUser: boolean;
+    filter: string;
+}
+
+export interface CreateProjectPayload {
+    title: string;
+    colour: string;
+}
+
+export interface CreateProjectResponse {
+    id: string;
+}
+
 export interface Option<T> {
     some: boolean;
     item: T;

@@ -1,9 +1,14 @@
-import { ITodoListApi, ProjectListQuery } from 'src/modules/server/services/ITodoListApi';
-import { of, Observable } from 'rxjs';
+import { ITodoListApi } from 'src/modules/server/services/ITodoListApi';
+import { of, Observable, Subject, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Notification, ProjectInfo } from 'src/modules/server/Types';
+import { Notification, ProjectInfo, CreateProjectPayload, ProjectListQuery, CreateProjectResponse } from 'src/modules/server/Types';
 import _ from 'lodash';
-import { delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
+
+const uuidv4 = () => 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+});
 
 const colours = [
     'rgb(211, 13, 211)',
@@ -35,11 +40,16 @@ const testProjects: ProjectInfo[] = [{
     isFavourite: false
 }].map((item, index) => ({ ...item, colour: getColour(index) }));
 
-const projectLookup = testProjects.reduce((acc, next) => ({ ...acc, [next.id]: next }), {});
+const getProjectLookup = projects => projects.reduce((acc, next) => ({ ...acc, [next.id]: next }), {});
 const toPositiveOption = item => ({ some: true, item });
 
 @Injectable()
 export class TodoListApi implements ITodoListApi {
+    private cache = new BehaviorSubject<{projects: ProjectInfo[], lookup: any}>({
+        projects: testProjects,
+        lookup: getProjectLookup(testProjects)
+    });
+
     loadNotifications = (): Observable<Notification[]> => of([{
         id: '1',
         header: 'You\'re using mock mode!',
@@ -59,7 +69,7 @@ export class TodoListApi implements ITodoListApi {
     markNotificationsAsSeen = (ids: string[]) => of(true);
 
     listProjects = (query: ProjectListQuery) => of(
-        testProjects.filter(project => {
+        this.cache.value.projects.filter(project => {
             const passesUserFilter = (query.belongingToUser && project.belongsToUser) || !query.belongingToUser;
             const passesFavouritesFilter = (query.favouritesOnly && project.isFavourite) || !query.favouritesOnly;
             const passesQueryString = (query.filter !== '' && project.title.includes(query.filter)) || query.filter === '';
@@ -69,6 +79,29 @@ export class TodoListApi implements ITodoListApi {
     );
 
     findProjectById = (id: string) => of(
-        _.has(projectLookup, id) ? toPositiveOption(projectLookup[id]) : { some: false, item: null }
+        _.has(this.cache.value.lookup, id) ? toPositiveOption(this.cache.value.lookup[id]) : { some: false, item: null }
     ).pipe(delay(500));
+
+    createNewProject = (payload: CreateProjectPayload): Observable<CreateProjectResponse> => {
+        const id = uuidv4();
+
+        const project: ProjectInfo = {
+            ...payload,
+            id,
+            belongsToUser: true,
+            isFavourite: false
+        };
+
+        this.cache.next({
+            projects: [ ...this.cache.value.projects, project ],
+            lookup: getProjectLookup([ ...this.cache.value.projects, project ])
+        });
+
+        return of({ id }).pipe(delay(500));
+    };
+
+    setFavourite = (id: string, favourite: boolean) => this.cache.next({
+        ...this.cache.value,
+        projects: this.cache.value.projects.map(p => ({ ...p, isFavourite: p.id === id ? favourite : p.isFavourite }))
+    });
 };

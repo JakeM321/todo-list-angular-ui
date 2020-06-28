@@ -1,13 +1,5 @@
 import { Observable } from 'rxjs';
-import { Notification, ProjectInfo, Option } from '../Types';
-
-export interface ProjectListQuery {
-    skip: number;
-    take: number;
-    favouritesOnly: boolean;
-    belongingToUser: boolean;
-    filter: string;
-};
+import { Notification, ProjectInfo, Option, ProjectListQuery, CreateProjectPayload, CreateProjectResponse } from '../Types';
 
 export interface ITodoListApi {
     loadNotifications(): Observable<Notification[]>;
@@ -15,4 +7,7 @@ export interface ITodoListApi {
 
     listProjects(query: ProjectListQuery): Observable<ProjectInfo[]>;
     findProjectById(id: string): Observable<Option<ProjectInfo>>;
-};
+
+    createNewProject(payload: CreateProjectPayload): Observable<CreateProjectResponse>;
+    setFavourite(id: string, favourite: boolean);
+}

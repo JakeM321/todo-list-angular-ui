@@ -1,4 +1,4 @@
-import { ProjectInfo } from 'src/modules/server/Types';
+import { ProjectInfo, CreateProjectPayload } from 'src/modules/server/Types';
 import { Service } from 'src/shared/Service';
 import { Inject, Injectable } from '@angular/core';
 import { ITodoListApi } from 'src/modules/server/services/ITodoListApi';
@@ -7,6 +7,7 @@ import _ from 'lodash';
 interface ProjectServiceState {
     projects: ProjectInfo[],
     favourites: any,
+    creating: boolean,
     selected: {
         attempted: boolean,
         some: boolean,
@@ -18,6 +19,7 @@ interface ProjectServiceState {
 const initialState: ProjectServiceState = {
     projects: [],
     favourites: {},
+    creating: false,
     selected: {
         attempted: false,
         some: false,
@@ -62,13 +64,12 @@ export class ProjectService extends Service<ProjectServiceState> {
     projects = this.pick(state => state.projects.map(project => ({ ...project, isFavourite: state.favourites[project.id] })));
 
     toggleFavourite = (id: string) => {
-        //Update cache
+        this.api.setFavourite(id, ! this.state.value.favourites[id]);
+
         this.setState(state => ({
             ...state,
             favourites: { ...state.favourites, [id]: !state.favourites[id] }
         }));
-
-        //TODO: update server
     };
 
     openProject = (id: string) => {
@@ -84,5 +85,13 @@ export class ProjectService extends Service<ProjectServiceState> {
         })));
     };
 
+    createNewProject = (payload: CreateProjectPayload) => {
+        this.setState(state => ({ ...state, creating: true }));
+        const request = this.api.createNewProject(payload);
+        request.subscribe(() => this.setState(state => ({ ...state, creating: false })));
+        return request;
+    };
+
+    creating = this.pick(state => state.creating);
     selected = this.pick(state => state.selected);
 };
