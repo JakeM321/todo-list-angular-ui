@@ -44,6 +44,9 @@ export class ProjectListComponent implements OnInit {
     )
   );
 
-  toggleFavourite = this.projectService.toggleFavourite;
+  starClicked = (event: Event, tileId: string) => {
+    event.preventDefault();
+    this.projectService.toggleFavourite(tileId);
+  };
 
 }

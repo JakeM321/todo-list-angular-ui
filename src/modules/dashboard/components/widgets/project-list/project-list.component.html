@@ -20,7 +20,7 @@
                         (mouseover)="hoveredStar = tile.id"
                         (mouseout)="hoveredStar = -1"
                         [icon]="[tile.isFavourite || hoveredStar === tile.id ? 'fas' : 'far', 'star']"
-                        (click)="toggleFavourite(tile.id)"
+                        (click)="starClicked($event, tile.id)"
                     ></fa-icon>
                 </div>
             </div>
