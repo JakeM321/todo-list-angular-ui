@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Notification, ProjectInfo } from '../Types';
+import { Notification, ProjectInfo, Option } from '../Types';
 
 export interface ProjectListQuery {
     skip: number;
@@ -14,4 +14,5 @@ export interface ITodoListApi {
     markNotificationsAsSeen(notifications: string[]): Observable<boolean>;
 
     listProjects(query: ProjectListQuery): Observable<ProjectInfo[]>;
+    findProjectById(id: string): Observable<Option<ProjectInfo>>;
 };

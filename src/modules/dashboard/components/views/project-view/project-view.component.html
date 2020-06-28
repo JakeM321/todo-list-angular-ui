@@ -1,0 +1,29 @@
+<ng-container *ngIf="(selected | async).loading">
+    <app-loading-spinner></app-loading-spinner>
+</ng-container>
+
+<ng-container *ngIf="! (selected | async).loading">
+    <ng-container *ngIf="(selected | async).some">
+        <div class="flex-row project-header">
+            <h3 class="heading is-3">{{ (selected | async).project.title }}</h3>
+            <div class="tabs is-boxed">
+                <ul>
+                    <li class="is-active"><a [routerLink]="['tasks']" >Tasks</a></li>
+                    <li><a [routerLink]="['members']">Members</a></li>
+                    <li><a [routerLink]="['activity']">Activity</a></li>
+                </ul>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="! (selected | async).some">
+        <article class="message is-danger" style="margin-top: 85px;">
+            <div class="message-header">
+              <p>Not found</p>
+            </div>
+            <div class="message-body">
+              Could not find a project with the specified ID
+            </div>
+        </article>
+    </ng-container>
+</ng-container>
+

@@ -1,0 +1,16 @@
+@import 'styles.less';
+
+:host {
+    flex-grow: 1;
+}
+
+.project-header {
+    flex-wrap: wrap;
+    align-items: baseline;
+}
+
+@media all and (max-width: @sizes[mobile]) {
+    .project-header {
+        margin-top: 85px;
+    }
+}

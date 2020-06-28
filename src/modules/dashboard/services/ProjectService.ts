@@ -6,12 +6,30 @@ import _ from 'lodash';
 
 interface ProjectServiceState {
     projects: ProjectInfo[],
-    favourites: any
+    favourites: any,
+    selected: {
+        attempted: boolean,
+        some: boolean,
+        loading: boolean,
+        project: ProjectInfo
+    }
 };
 
 const initialState: ProjectServiceState = {
     projects: [],
-    favourites: {}
+    favourites: {},
+    selected: {
+        attempted: false,
+        some: false,
+        loading: false,
+        project: {
+            id: '',
+            title: '',
+            colour: '',
+            belongsToUser: false,
+            isFavourite: false
+        }
+    }
 };
 
 @Injectable({
@@ -52,4 +70,19 @@ export class ProjectService extends Service<ProjectServiceState> {
 
         //TODO: update server
     };
+
+    openProject = (id: string) => {
+        this.setState(state => ({ ...state, selected: { ...state.selected, loading: true }}));
+        this.api.findProjectById(id).subscribe(result => this.setState(state => ({
+            ...state,
+            selected: {
+                attempted: true,
+                loading: false,
+                some: result.some,
+                project: result.item
+            }
+        })));
+    };
+
+    selected = this.pick(state => state.selected);
 };

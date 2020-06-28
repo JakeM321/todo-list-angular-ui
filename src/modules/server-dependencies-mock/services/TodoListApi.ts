@@ -2,6 +2,8 @@ import { ITodoListApi, ProjectListQuery } from 'src/modules/server/services/ITod
 import { of, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Notification, ProjectInfo } from 'src/modules/server/Types';
+import _ from 'lodash';
+import { delay } from 'rxjs/operators';
 
 const colours = [
     'rgb(211, 13, 211)',
@@ -33,6 +35,9 @@ const testProjects: ProjectInfo[] = [{
     isFavourite: false
 }].map((item, index) => ({ ...item, colour: getColour(index) }));
 
+const projectLookup = testProjects.reduce((acc, next) => ({ ...acc, [next.id]: next }), {});
+const toPositiveOption = item => ({ some: true, item });
+
 @Injectable()
 export class TodoListApi implements ITodoListApi {
     loadNotifications = (): Observable<Notification[]> => of([{
@@ -62,4 +67,8 @@ export class TodoListApi implements ITodoListApi {
             return passesUserFilter && passesFavouritesFilter && passesQueryString;
         }).splice(query.skip, query.take)
     );
+
+    findProjectById = (id: string) => of(
+        _.has(projectLookup, id) ? toPositiveOption(projectLookup[id]) : { some: false, item: null }
+    ).pipe(delay(500));
 };

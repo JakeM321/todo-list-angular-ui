@@ -45,3 +45,8 @@ export interface ProjectInfo {
     belongsToUser: boolean;
     isFavourite: boolean;
 }
+
+export interface Option<T> {
+    some: boolean;
+    item: T;
+}

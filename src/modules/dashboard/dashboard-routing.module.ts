@@ -1,6 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule, Component } from '@angular/core';
 import { MainViewComponent } from './components/views/main-view/main-view.component';
+import { ProjectViewComponent } from './components/views/project-view/project-view.component';
 
 @Component({
     template: '<p>Placeholder</p>'
@@ -18,6 +19,9 @@ const routes: Routes = [{
   },{
     path: 'notifications',
     component: PlaceholderComponent
+  }, {
+    path: 'project/:id',
+    component: ProjectViewComponent
   }];
   
   @NgModule({
