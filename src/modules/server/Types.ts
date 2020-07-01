@@ -63,6 +63,20 @@ export interface CreateProjectResponse {
     id: string;
 }
 
+export interface AppUser {
+    email: string;
+    displayName: string;
+}
+
+export interface ProjectTask {
+    id: string;
+    projectId: string;
+    assignedTo: AppUser;
+    label: string;
+    description: string;
+    completed: boolean;
+}
+
 export interface Option<T> {
     some: boolean;
     item: T;

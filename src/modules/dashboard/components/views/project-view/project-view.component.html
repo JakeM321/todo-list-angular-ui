@@ -8,12 +8,14 @@
             <h3 class="heading is-3">{{ (selected | async).project.title }}</h3>
             <div class="tabs is-boxed">
                 <ul>
-                    <li class="is-active"><a [routerLink]="['tasks']" >Tasks</a></li>
-                    <li><a [routerLink]="['members']">Members</a></li>
-                    <li><a [routerLink]="['activity']">Activity</a></li>
+                    <li [ngClass]="(tab | async)=='tasks' ? 'is-active': ''"><a [routerLink]="['tasks']" >Tasks</a></li>
+                    <li [ngClass]="(tab | async)=='members' ? 'is-active': ''"><a [routerLink]="['members']">Members</a></li>
+                    <li [ngClass]="(tab | async)=='activity' ? 'is-active': ''"><a [routerLink]="['activity']">Activity</a></li>
                 </ul>
             </div>
         </div>
+        <br/>
+        <router-outlet></router-outlet>
     </ng-container>
     <ng-container *ngIf="! (selected | async).some">
         <article class="message is-danger" style="margin-top: 85px;">

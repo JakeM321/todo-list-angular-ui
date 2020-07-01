@@ -1,18 +1,22 @@
 import { Injectable, Inject } from "@angular/core";
 import { Service } from 'src/shared/Service';
 
+export type ProjectUiTab = 'tasks' | 'members' | 'activity';
+
 export interface DashboardUiServiceState {
     notificationsOpen: boolean;
     userMenuOpen: boolean;
     sideMenuOpen: boolean;
     newProjectModalOpen: boolean;
+    projectUiTab: ProjectUiTab;
 };
 
 const initialState: DashboardUiServiceState = {
     notificationsOpen: false,
     userMenuOpen: false,
     sideMenuOpen: true,
-    newProjectModalOpen: false
+    newProjectModalOpen: false,
+    projectUiTab: 'tasks'
 };
 
 @Injectable({
@@ -36,4 +40,7 @@ export class DashboardUiService extends Service<DashboardUiServiceState> {
 
     newProjectMenuOpen = this.pick(state => state.newProjectModalOpen);
     toggleNewProjectMenu = () => this.setState(state => ({ ...state, newProjectModalOpen: !state.newProjectModalOpen }));
+
+    projectUiTab = this.pick(state => state.projectUiTab);
+    setProjectUiTab = (projectUiTab: ProjectUiTab) => this.setState(state => ({ ...state, projectUiTab }));
 };

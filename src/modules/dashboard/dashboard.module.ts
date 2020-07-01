@@ -8,7 +8,7 @@ import { NavbarComponent } from './components/widgets/navbar/navbar.component';
 import { NotificationMenuComponent } from './components/widgets/notification-menu/notification-menu.component';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faBell, faBars, faHome, faTasks, faChalkboard, faPlus, faStar as solidStar, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
+import { faStar as regularStar, faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { UserMenuComponent } from './components/widgets/user-menu/user-menu.component';
 import { SideMenuComponent } from './components/widgets/side-menu/side-menu.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -19,9 +19,13 @@ import { LoadingSpinnerComponent } from './components/elements/loading-spinner/l
 import { NewProjectModalComponent } from './components/widgets/new-project-modal/new-project-modal.component';
 import { ColorTwitterModule } from 'ngx-color/twitter'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProjectTaskViewComponent } from './components/views/project-task-view/project-task-view.component';
+import { ProjectMembersViewComponent } from './components/views/project-members-view/project-members-view.component';
+import { ProjectActivityViewComponent } from './components/views/project-activity-view/project-activity-view.component';
+import { TaskListComponent } from './components/widgets/task-list/task-list.component';
 
 @NgModule({
-  declarations: [DashboardUiComponent, AnchorWindowComponent, NavbarComponent, NotificationMenuComponent, UserMenuComponent, SideMenuComponent, MainViewComponent, ProjectListComponent, ProjectViewComponent, LoadingSpinnerComponent, NewProjectModalComponent],
+  declarations: [DashboardUiComponent, AnchorWindowComponent, NavbarComponent, NotificationMenuComponent, UserMenuComponent, SideMenuComponent, MainViewComponent, ProjectListComponent, ProjectViewComponent, LoadingSpinnerComponent, NewProjectModalComponent, ProjectTaskViewComponent, ProjectMembersViewComponent, ProjectActivityViewComponent, TaskListComponent],
   imports: [
     CommonModule,
     FontAwesomeModule,
@@ -35,6 +39,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class DashboardModule {
   constructor(library: FaIconLibrary) {
-    library.addIcons(faBell, faBars, faHome, faTasks, faChalkboard, faPlus, solidStar, regularStar as any, faSpinner);
+    library.addIcons(faBell, faBars, faHome, faTasks, faChalkboard, faPlus, solidStar, regularStar as any, faSpinner, faCheckCircle as any);
   }
 }

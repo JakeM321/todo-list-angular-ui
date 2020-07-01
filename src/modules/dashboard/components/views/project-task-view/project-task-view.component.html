@@ -1,0 +1,8 @@
+<app-task-list
+    [tasks]="tasks"
+    [canEdit]="true"
+    [includeAssignee]="true"
+    (edit)="edit()"
+    (markComplete)="markComplete($event)"
+>
+</app-task-list>

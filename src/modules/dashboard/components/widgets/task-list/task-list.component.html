@@ -1,0 +1,26 @@
+<div class="flex-row-reverse">
+    <div class="field">
+        <input type="checkbox" class="checkbox-input switch is-rounded" [checked]="showCompleted | async" (click)="toggleShowCompleted()"/>
+        <label>Show completed tasks</label>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <td>Name</td>
+        <td class="hidden-mobile">Description</td>
+        <td *ngIf="includeAssignee">Assigned to</td>
+    </thead>
+    <tr *ngFor="let task of tasks | async" [ngClass]="getRowClass(task, (transitioning | async), (showCompleted | async))">
+        <td>
+            <fa-icon class="tick fa-lg" [icon]="['far', 'check-circle']" (click)="check(task)"></fa-icon>
+            {{ task.label }}
+        </td>
+        <td class="hidden-mobile">
+            {{ task.description }}
+        </td>
+        <td>
+            {{ task.assignedTo.displayName }}
+        </td>
+    </tr>
+</table>

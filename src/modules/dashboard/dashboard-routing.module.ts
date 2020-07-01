@@ -2,6 +2,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgModule, Component } from '@angular/core';
 import { MainViewComponent } from './components/views/main-view/main-view.component';
 import { ProjectViewComponent } from './components/views/project-view/project-view.component';
+import { ProjectTaskViewComponent } from './components/views/project-task-view/project-task-view.component';
+import { ProjectMembersViewComponent } from './components/views/project-members-view/project-members-view.component';
+import { ProjectActivityViewComponent } from './components/views/project-activity-view/project-activity-view.component';
 
 @Component({
     template: '<p>Placeholder</p>'
@@ -21,7 +24,21 @@ const routes: Routes = [{
     component: PlaceholderComponent
   }, {
     path: 'project/:id',
-    component: ProjectViewComponent
+    component: ProjectViewComponent,
+    children: [{
+      path: '',
+      pathMatch: 'full',
+      redirectTo: 'tasks'
+    }, {
+      path: 'tasks',
+      component: ProjectTaskViewComponent
+    }, {
+      path: 'members',
+      component: ProjectMembersViewComponent
+    }, {
+      path: 'activity',
+      component: ProjectActivityViewComponent
+    }]
   }];
   
   @NgModule({
