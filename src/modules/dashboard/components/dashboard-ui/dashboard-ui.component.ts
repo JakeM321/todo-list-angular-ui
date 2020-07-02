@@ -23,6 +23,7 @@ export class DashboardUiComponent implements OnInit {
   ngOnInit(): void {
     this.notificationService.initialize();
     this.projectService.loadPreviewList();
+    this.projectService.loadUpcomingTasks();
 
     ifMobile(this.dashboardUiService.toggleSideMenu);
   };

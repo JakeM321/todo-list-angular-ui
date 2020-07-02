@@ -1,8 +1,32 @@
-import { ProjectInfo, CreateProjectPayload } from 'src/modules/server/Types';
+import { ProjectInfo, CreateProjectPayload, ProjectTask, ProjectTaskIdentity } from 'src/modules/server/Types';
 import { Service } from 'src/shared/Service';
 import { Inject, Injectable } from '@angular/core';
 import { ITodoListApi } from 'src/modules/server/services/ITodoListApi';
 import _ from 'lodash';
+import { combineLatest } from 'rxjs';
+
+interface TaskCache {
+    records: ProjectTask[],
+    completed: { [id: string]: boolean }
+};
+
+const getTaskCache = (tasks: ProjectTask[]): TaskCache => ({
+    records: tasks,
+    completed: tasks.reduce((acc, next) => ({ ...acc, [next.id]: next.completed }), {})
+});
+
+const readTaskCache = (cache: TaskCache): ProjectTask[] => cache.records.map(record => ({
+    ...record,
+    completed: _.get(cache.completed, record.id, record.completed)
+}));
+
+const updateTaskCache = (cache: TaskCache, updates: { [id: string]: boolean }): TaskCache => ({
+    ...cache,
+    completed: {
+        ...cache.completed,
+        ...updates
+    }
+});
 
 interface ProjectServiceState {
     projects: ProjectInfo[],
@@ -12,8 +36,10 @@ interface ProjectServiceState {
         attempted: boolean,
         some: boolean,
         loading: boolean,
-        project: ProjectInfo
-    }
+        project: ProjectInfo,
+        tasks: TaskCache
+    },
+    upcomingTasks: TaskCache
 };
 
 const initialState: ProjectServiceState = {
@@ -30,8 +56,10 @@ const initialState: ProjectServiceState = {
             colour: '',
             belongsToUser: false,
             isFavourite: false
-        }
-    }
+        },
+        tasks: getTaskCache([])
+    },
+    upcomingTasks: getTaskCache([])
 };
 
 @Injectable({
@@ -61,6 +89,14 @@ export class ProjectService extends Service<ProjectServiceState> {
         })));
     };
 
+    loadUpcomingTasks = () => {
+        const request = this.api.listUpcomingTasks();
+        request.subscribe(response => this.setState(state => ({
+            ...state,
+            upcomingTasks: getTaskCache(response)
+        })));
+    };
+
     projects = this.pick(state => state.projects.map(project => ({ ...project, isFavourite: state.favourites[project.id] })));
 
     toggleFavourite = (id: string) => {
@@ -74,13 +110,17 @@ export class ProjectService extends Service<ProjectServiceState> {
 
     openProject = (id: string) => {
         this.setState(state => ({ ...state, selected: { ...state.selected, loading: true }}));
-        this.api.findProjectById(id).subscribe(result => this.setState(state => ({
+        const projectReq = this.api.findProjectById(id)
+        const taskReq = this.api.listProjectTasks(id);
+
+        combineLatest(projectReq, taskReq).subscribe(([project, tasks]) => this.setState(state => ({
             ...state,
             selected: {
                 attempted: true,
                 loading: false,
-                some: result.some,
-                project: result.item
+                some: project.some,
+                project: project.item,
+                tasks: getTaskCache(tasks)
             }
         })));
     };
@@ -93,5 +133,31 @@ export class ProjectService extends Service<ProjectServiceState> {
     };
 
     creating = this.pick(state => state.creating);
-    selected = this.pick(state => state.selected);
+    selected = this.pick(state => ({
+        ...state.selected,
+        tasks: readTaskCache(state.selected.tasks)
+    }));
+
+    markTaskCompletion = (isFromUpcomingTasks: boolean, task: ProjectTaskIdentity) => {
+        const { id, projectId } = task;
+        const cacheToUse = isFromUpcomingTasks ? this.state.value.upcomingTasks.completed :  this.state.value.selected.tasks.completed;
+        const toggleValue = ! cacheToUse[id];
+
+        this.api.markTaskCompletion(projectId, id, toggleValue);
+
+        const withCacheUpdate = (source: any, key: string, shouldUpdate: boolean) => shouldUpdate ? ({
+            [key]: updateTaskCache(source[key], { [id]: toggleValue })
+        }) : {};
+
+        this.setState(state => ({
+            ...state,
+            ...withCacheUpdate(state, 'upcomingTasks', isFromUpcomingTasks),
+            selected: {
+                ...state.selected,
+                ...withCacheUpdate(state.selected, 'tasks', ! isFromUpcomingTasks)
+            }
+        }));
+    };
+
+    upcomingTasks = this.pick(state => readTaskCache(state.upcomingTasks));
 };

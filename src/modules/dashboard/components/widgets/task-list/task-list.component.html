@@ -1,11 +1,11 @@
-<div class="flex-row-reverse">
+<div class="flex-row-reverse" *ngIf="! disableCompleted">
     <div class="field">
         <input type="checkbox" class="checkbox-input switch is-rounded" [checked]="showCompleted | async" (click)="toggleShowCompleted()"/>
         <label>Show completed tasks</label>
     </div>
 </div>
 
-<table class="table">
+<table class="table" *ngIf="(tasks | async).length > 0 && ( (nonCompletedCount | async) > 0 || !disableCompleted )">
     <thead>
         <td>Name</td>
         <td class="hidden-mobile">Description</td>
@@ -19,8 +19,12 @@
         <td class="hidden-mobile">
             {{ task.description }}
         </td>
-        <td>
+        <td *ngIf="includeAssignee">
             {{ task.assignedTo.displayName }}
         </td>
     </tr>
 </table>
+
+<p *ngIf="(tasks | async).length === 0 || (nonCompletedCount | async) === 0 && disableCompleted" 
+    class="subtle centered"
+>No upcoming tasks</p>

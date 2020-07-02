@@ -68,9 +68,12 @@ export interface AppUser {
     displayName: string;
 }
 
-export interface ProjectTask {
+export interface ProjectTaskIdentity {
     id: string;
     projectId: string;
+}
+
+export interface ProjectTask extends ProjectTaskIdentity {
     assignedTo: AppUser;
     label: string;
     description: string;
