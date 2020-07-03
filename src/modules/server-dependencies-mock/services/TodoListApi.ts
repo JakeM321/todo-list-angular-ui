@@ -128,7 +128,7 @@ export class TodoListApi implements ITodoListApi {
 
     private taskCache = new BehaviorSubject<TaskLookup>(tasks);
 
-    listProjectTasks = (id: string) => of(this.taskCache.value[id]);
+    listProjectTasks = (id: string) => of(_.get(this.taskCache.value, id, []));
     listUpcomingTasks = () => of(
         flatten(this.taskCache.value).filter((task: ProjectTask) => 
             task.assignedTo.displayName === this.user
