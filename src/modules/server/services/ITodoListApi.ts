@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Notification, ProjectInfo, Option, ProjectListQuery, CreateProjectPayload, CreateProjectResponse, ProjectTask } from '../Types';
+import { Notification, ProjectInfo, Option, ProjectListQuery, CreateProjectPayload, CreateProjectResponse, ProjectTask, AppUser } from '../Types';
 
 export interface ITodoListApi {
     loadNotifications(): Observable<Notification[]>;
@@ -13,6 +13,7 @@ export interface ITodoListApi {
 
     listUpcomingTasks(): Observable<ProjectTask[]>;
     listProjectTasks(id: string): Observable<ProjectTask[]>;
+    listMembers(id: string): Observable<AppUser[]>;
 
     markTaskCompletion(projectId: string, taskId: string, completed: boolean);
 }

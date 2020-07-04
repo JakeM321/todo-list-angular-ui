@@ -1,1 +1,14 @@
-<p>project-members-view works!</p>
+<table class="table">
+    <thead>
+        <td>Name</td>
+        <td>Email address</td>
+    </thead>
+    <tr *ngFor="let member of members | async">
+        <td>
+            {{ member.displayName }}
+        </td>
+        <td class="hidden-mobile">
+            {{ member.email }}
+        </td>
+    </tr>
+</table>

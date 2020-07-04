@@ -109,6 +109,29 @@ const tasks: TaskLookup = {
     '4': []
 };
 
+type MemberLookup = { [id: string]: AppUser[]};
+
+const commonUsers = [{
+    email: 'john.smith@gmail.com',
+    displayName: 'John Smith'
+}, { 
+    email: 'a.smith@gmail.com',
+    displayName: 'Andrew' 
+}, { 
+    email: 'b.smith@gmail.com',
+    displayName: 'Bill'
+}, { 
+    email: 'j.smith@gmail.com',
+    displayName: 'Josh'
+}]
+
+const members: MemberLookup = {
+    '1': commonUsers,
+    '2': commonUsers,
+    '3': commonUsers,
+    '4': commonUsers
+};
+
 const flatten = (lookup: TaskLookup): ProjectTask[] => Object.keys(lookup).reduce((acc, next) => [ ...acc, ...lookup[next] ] , []);
 
 @Injectable()
@@ -127,6 +150,7 @@ export class TodoListApi implements ITodoListApi {
     });
 
     private taskCache = new BehaviorSubject<TaskLookup>(tasks);
+    private memberCache = new BehaviorSubject<MemberLookup>(members);
 
     listProjectTasks = (id: string) => of(_.get(this.taskCache.value, id, []));
     listUpcomingTasks = () => of(
@@ -200,4 +224,8 @@ export class TodoListApi implements ITodoListApi {
         ...this.projectCache.value,
         projects: this.projectCache.value.projects.map(p => ({ ...p, isFavourite: p.id === id ? favourite : p.isFavourite }))
     });
+
+    listMembers = (id: string) => of(
+        _.get(this.memberCache.value, id, [])
+    );
 };

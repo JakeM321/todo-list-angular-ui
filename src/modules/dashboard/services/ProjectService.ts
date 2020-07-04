@@ -1,4 +1,4 @@
-import { ProjectInfo, CreateProjectPayload, ProjectTask, ProjectTaskIdentity } from 'src/modules/server/Types';
+import { ProjectInfo, CreateProjectPayload, ProjectTask, ProjectTaskIdentity, AppUser } from 'src/modules/server/Types';
 import { Service } from 'src/shared/Service';
 import { Inject, Injectable } from '@angular/core';
 import { ITodoListApi } from 'src/modules/server/services/ITodoListApi';
@@ -37,7 +37,8 @@ interface ProjectServiceState {
         some: boolean,
         loading: boolean,
         project: ProjectInfo,
-        tasks: TaskCache
+        tasks: TaskCache,
+        members: AppUser[]
     },
     upcomingTasks: TaskCache
 };
@@ -57,7 +58,8 @@ const initialState: ProjectServiceState = {
             belongsToUser: false,
             isFavourite: false
         },
-        tasks: getTaskCache([])
+        tasks: getTaskCache([]),
+        members: []
     },
     upcomingTasks: getTaskCache([])
 };
@@ -112,15 +114,17 @@ export class ProjectService extends Service<ProjectServiceState> {
         this.setState(state => ({ ...state, selected: { ...state.selected, loading: true }}));
         const projectReq = this.api.findProjectById(id)
         const taskReq = this.api.listProjectTasks(id);
+        const membersReq = this.api.listMembers(id);
 
-        combineLatest(projectReq, taskReq).subscribe(([project, tasks]) => this.setState(state => ({
+        combineLatest(projectReq, taskReq, membersReq).subscribe(([project, tasks, members]) => this.setState(state => ({
             ...state,
             selected: {
                 attempted: true,
                 loading: false,
                 some: project.some,
                 project: project.item,
-                tasks: getTaskCache(tasks)
+                tasks: getTaskCache(tasks),
+                members
             }
         })));
     };
@@ -160,4 +164,6 @@ export class ProjectService extends Service<ProjectServiceState> {
     };
 
     upcomingTasks = this.pick(state => readTaskCache(state.upcomingTasks));
+
+    members = this.pick(state => state.selected.members);
 };
