@@ -1,0 +1,40 @@
+<div class="modal" [ngClass]="(menuOpen | async) ? 'is-active' : ''" style="z-index: 5;">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="panel is-dark">
+            <div class="panel-heading">
+                New Task
+            </div>
+            <div class="panel-block" style="background: white;">
+                <form [formGroup]="form" (ngSubmit)="onSubmit()" style="flex-grow: 1;">
+                    <div class="form-group">
+                        <label class="label">Task name:</label>
+                        <input class="input" formControlName="name" />
+                    </div>
+                    <div class="form-group">
+                        <label class="label">Description:</label>
+                        <input class="input" formControlName="description" />
+                    </div>
+                    <div class="form-group">
+                        <label class="label">Assign to:</label>
+                        <div class="control">
+                            <div class="select">
+                                <select formControlName="assignTo">
+                                    <option *ngFor="let member of members | async" [ngValue]="member">
+                                        {{ member.displayName }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="flex-row space-between">
+                        <button class="button is-primary" [disabled]="(loading | async) || !form.valid">Create</button>
+                        <button class="button is-light" (click)="close()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close" (click)="close()"></button>
+</div>

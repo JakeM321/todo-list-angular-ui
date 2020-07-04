@@ -9,6 +9,7 @@ export interface DashboardUiServiceState {
     sideMenuOpen: boolean;
     newProjectModalOpen: boolean;
     projectUiTab: ProjectUiTab;
+    newTaskMenuOpen: boolean;
 };
 
 const initialState: DashboardUiServiceState = {
@@ -16,7 +17,8 @@ const initialState: DashboardUiServiceState = {
     userMenuOpen: false,
     sideMenuOpen: true,
     newProjectModalOpen: false,
-    projectUiTab: 'tasks'
+    projectUiTab: 'tasks',
+    newTaskMenuOpen: false
 };
 
 @Injectable({
@@ -43,4 +45,7 @@ export class DashboardUiService extends Service<DashboardUiServiceState> {
 
     projectUiTab = this.pick(state => state.projectUiTab);
     setProjectUiTab = (projectUiTab: ProjectUiTab) => this.setState(state => ({ ...state, projectUiTab }));
+
+    newTaskMenuOpen = this.pick(state => state.newTaskMenuOpen);
+    toggleNewTaskMenu = () => this.setState(state => ({ ...state, newTaskMenuOpen: !state.newTaskMenuOpen}));
 };

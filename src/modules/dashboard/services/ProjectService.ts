@@ -1,4 +1,4 @@
-import { ProjectInfo, CreateProjectPayload, ProjectTask, ProjectTaskIdentity, AppUser } from 'src/modules/server/Types';
+import { ProjectInfo, CreateProjectPayload, ProjectTask, ProjectTaskIdentity, AppUser, CreateTaskPayload } from 'src/modules/server/Types';
 import { Service } from 'src/shared/Service';
 import { Inject, Injectable } from '@angular/core';
 import { ITodoListApi } from 'src/modules/server/services/ITodoListApi';
@@ -32,6 +32,7 @@ interface ProjectServiceState {
     projects: ProjectInfo[],
     favourites: any,
     creating: boolean,
+    creatingTask: boolean;
     selected: {
         attempted: boolean,
         some: boolean,
@@ -47,6 +48,7 @@ const initialState: ProjectServiceState = {
     projects: [],
     favourites: {},
     creating: false,
+    creatingTask: false,
     selected: {
         attempted: false,
         some: false,
@@ -134,6 +136,13 @@ export class ProjectService extends Service<ProjectServiceState> {
         const request = this.api.createNewProject(payload);
         request.subscribe(() => this.setState(state => ({ ...state, creating: false })));
         return request;
+    };
+
+    createNewTask = (payload: CreateTaskPayload) => {
+        this.setState(state => ({ ...state, creatingTask: true }));
+        const req = this.api.createNewTask(payload);
+        req.subscribe(() => this.setState(state => ({ ...state, creatingTask: false })));
+        return req;
     };
 
     creating = this.pick(state => state.creating);

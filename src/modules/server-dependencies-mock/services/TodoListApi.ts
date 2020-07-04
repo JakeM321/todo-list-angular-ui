@@ -1,7 +1,7 @@
 import { ITodoListApi } from 'src/modules/server/services/ITodoListApi';
 import { of, Observable, Subject, BehaviorSubject } from 'rxjs';
 import { Injectable, Inject } from '@angular/core';
-import { Notification, ProjectInfo, CreateProjectPayload, ProjectListQuery, CreateProjectResponse, ProjectTask, AppUser } from 'src/modules/server/Types';
+import { Notification, ProjectInfo, CreateProjectPayload, ProjectListQuery, CreateProjectResponse, ProjectTask, AppUser, CreateTaskPayload, CreateTaskResponse } from 'src/modules/server/Types';
 import _ from 'lodash';
 import { delay, map } from 'rxjs/operators';
 import { IAuthenticationService } from 'src/modules/server/services/IAuthenticationService';
@@ -219,6 +219,27 @@ export class TodoListApi implements ITodoListApi {
 
         return of({ id }).pipe(delay(500));
     };
+
+    createNewTask = (payload: CreateTaskPayload): Observable<CreateTaskResponse> => {
+        const task: ProjectTask = {
+            ...payload,
+            id: uuidv4(),
+            label: payload.name,
+            completed: false
+        };
+
+        console.log('New task', task);
+
+        this.taskCache.next({
+            ...this.taskCache.value,
+            [payload.projectId]: [
+                task,
+                ...this.taskCache.value[payload.projectId]
+            ]
+        });
+
+        return of({success: true});
+    }
 
     setFavourite = (id: string, favourite: boolean) => this.projectCache.next({
         ...this.projectCache.value,

@@ -27,4 +27,6 @@ export class ProjectTaskViewComponent implements OnInit {
 
   edit = () => {};
 
+  newTask = () => this.dashboardUiService.toggleNewTaskMenu();
+
 }

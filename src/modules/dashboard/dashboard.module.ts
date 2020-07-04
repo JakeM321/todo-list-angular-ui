@@ -23,9 +23,10 @@ import { ProjectTaskViewComponent } from './components/views/project-task-view/p
 import { ProjectMembersViewComponent } from './components/views/project-members-view/project-members-view.component';
 import { ProjectActivityViewComponent } from './components/views/project-activity-view/project-activity-view.component';
 import { TaskListComponent } from './components/widgets/task-list/task-list.component';
+import { NewTaskModalComponent } from './components/widgets/new-task-modal/new-task-modal.component';
 
 @NgModule({
-  declarations: [DashboardUiComponent, AnchorWindowComponent, NavbarComponent, NotificationMenuComponent, UserMenuComponent, SideMenuComponent, MainViewComponent, ProjectListComponent, ProjectViewComponent, LoadingSpinnerComponent, NewProjectModalComponent, ProjectTaskViewComponent, ProjectMembersViewComponent, ProjectActivityViewComponent, TaskListComponent],
+  declarations: [DashboardUiComponent, AnchorWindowComponent, NavbarComponent, NotificationMenuComponent, UserMenuComponent, SideMenuComponent, MainViewComponent, ProjectListComponent, ProjectViewComponent, LoadingSpinnerComponent, NewProjectModalComponent, ProjectTaskViewComponent, ProjectMembersViewComponent, ProjectActivityViewComponent, TaskListComponent, NewTaskModalComponent],
   imports: [
     CommonModule,
     FontAwesomeModule,

@@ -59,8 +59,19 @@ export interface CreateProjectPayload {
     colour: string;
 }
 
+export interface CreateTaskPayload {
+    projectId: string;
+    name: string;
+    description: string;
+    assignedTo: AppUser;
+}
+
 export interface CreateProjectResponse {
     id: string;
+}
+
+export interface CreateTaskResponse {
+    success: boolean;
 }
 
 export interface AppUser {

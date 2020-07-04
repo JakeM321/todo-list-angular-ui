@@ -1,3 +1,5 @@
+<app-new-task-modal></app-new-task-modal>
+
 <app-task-list
     [tasks]="tasks"
     [canEdit]="true"
@@ -6,3 +8,11 @@
     (markComplete)="markComplete($event)"
 >
 </app-task-list>
+<br/>
+
+<div class="flex-row">
+    <div class="flex-row align-center new-task" (click)="newTask()">
+        <fa-icon [icon]="['fas', 'plus']" class="fa-lg text-subtle" style="margin: 10px;"></fa-icon>
+        <h4 class="title is-4"><span class="text-subtle">New task</span></h4>
+    </div>
+</div>
