@@ -11,8 +11,8 @@ export interface AuthenticationServiceState {
 
 const initialState: AuthenticationServiceState = {
     status: {
-        isAuthenticated: true,
-        displayName: 'John Smith'
+        isAuthenticated: false,
+        displayName: ''
     }
 };
 
