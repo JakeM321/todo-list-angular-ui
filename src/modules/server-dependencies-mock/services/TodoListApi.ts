@@ -219,6 +219,11 @@ export class TodoListApi implements ITodoListApi {
             lookup: getProjectLookup([ ...this.projectCache.value.projects, project ])
         });
 
+        this.memberCache.next({
+            ...this.memberCache.value,
+            [id]: commonUsers
+        });
+
         return of({ id }).pipe(delay(500));
     };
 
