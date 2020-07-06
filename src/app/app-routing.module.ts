@@ -21,6 +21,8 @@ class Guard implements CanActivate {
   ) {}
 
   canActivate = () => this.authenticationService.Status.pipe(map(status => {
+    document.documentElement.style.background = `var(--colour-${this.mode === Mode.Dashboard ? 'dashboard': 'login'}-bg)`;
+
     if (this.mode === Mode.Dashboard && !status.isAuthenticated) {
       return this.router.parseUrl('/');
     } else if (this.mode === Mode.Login && status.isAuthenticated) {
