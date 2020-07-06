@@ -20,24 +20,6 @@ const initialState: AuthenticationServiceState = {
 export class AuthenticationService extends Service<AuthenticationServiceState> implements IAuthenticationService {
     constructor(@Inject('environment') environment) {
         super(initialState, environment);
-
-        console.log('AuthenticationService initialized');
-
-        window['pushWebsocketMessage'] = (payload: {header: string, body: string}) => this.websocket.next(payload);
-        window['pushNotification'] = ({ id, header, body }) => this.websocket.next({
-            header: 'notification',
-            body: JSON.stringify({
-                id,
-                header,
-                body,
-                isLink: false,
-                link: '',
-                seen: false
-            })
-        });
-
-        console.log('Use pushWebsocketMessage({ header, body }) to inject websocket messages.');
-        console.log('Notifications can be pushed with: pushNotification({ header: \'\', body: \'\'})');
     }
 
     Status = this.pick(state => state.status);
