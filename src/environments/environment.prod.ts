@@ -1,8 +1,10 @@
-import { ServerDependenciesModule } from 'src/modules/server-dependencies/server-dependencies.module';
+//TODO - switch mock dependencies with actual dependencies when ready
+
+import { ServerDependenciesMockModule } from 'src/modules/server-dependencies-mock/server-dependencies-mock.module';
 
 export const environment = {
   production: true,
-  sso: ''
+  sso: 'assert/code'
 };
 
-export { ServerDependenciesModule as DependenciesModule }
+export { ServerDependenciesMockModule as DependenciesModule }
