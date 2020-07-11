@@ -4,6 +4,8 @@ import { AuthStatus, AuthResult, RegisterResult, PasswordAuthPayload, OAuthPaylo
 export interface IAuthenticationService {
     Status: Observable<AuthStatus>;
 
+    Initialize();
+
     Login(payload: PasswordAuthPayload): Observable<AuthResult>;
     Register(payload: PasswordAuthPayload): Observable<RegisterResult>;
 

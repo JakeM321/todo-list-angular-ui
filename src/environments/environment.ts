@@ -4,12 +4,13 @@
 
 //TODO - switch mock dependencies with actual dependencies when ready
 
-import { ServerDependenciesMockModule } from 'src/modules/server-dependencies-mock/server-dependencies-mock.module';
+import { ServerDependenciesModule } from 'src/modules/server-dependencies/server-dependencies.module';
 
 export const environment = {
   production: false,
   logStateChange: true,
-  sso: 'assert/code'
+  sso: 'assert/code',
+  baseUrl: 'https://localhost:44325'
 };
 
 /*
@@ -21,4 +22,4 @@ export const environment = {
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
 
-export { ServerDependenciesMockModule as DependenciesModule }
+export { ServerDependenciesModule as DependenciesModule }

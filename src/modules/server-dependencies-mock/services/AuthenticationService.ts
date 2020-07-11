@@ -21,6 +21,8 @@ export class AuthenticationService extends Service<AuthenticationServiceState> i
     constructor(@Inject('environment') environment) {
         super(initialState, environment);
     }
+    
+    Initialize = () => console.log('Initialized mock authentication service');
 
     Status = this.pick(state => state.status);
 
