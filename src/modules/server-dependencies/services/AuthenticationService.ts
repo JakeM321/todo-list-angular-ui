@@ -65,49 +65,44 @@ export class AuthenticationService extends Service<AuthenticationServiceState> i
         }
     }
 
+    private setAuthentication = (response: LoginResponse) => {
+        this.setState(state => ({
+            ...state,
+            status: {
+                isAuthenticated: response.valid,
+                displayName: response.displayName
+            }
+        }));
+
+        if (response.valid) {
+            this.cookieService.set('token', response.token);
+            this.cookieService.set('displayName', response.displayName);
+        }
+    }
+
+    private processLoginResponse = (request: Observable<LoginResponse>) => {
+        request.subscribe(this.setAuthentication);
+        return request.pipe(map(({ valid }) => ({ success: valid })));
+    }
+
     Login = (payload: PasswordAuthPayload) => {
         const request = this.http.post<LoginResponse>('api/auth/email-login', payload).pipe(share());
-
-        request.subscribe(response => {
-            this.setState(state => ({
-                ...state,
-                status: {
-                    isAuthenticated: response.valid,
-                    displayName: response.displayName
-                }
-            }));
-
-            if (response.valid) {
-                this.cookieService.set('token', response.token);
-                this.cookieService.set('displayName', response.displayName);
-            }
-        });
-
-        return request.pipe(map(({ valid }) => ({ success: valid })));
+        return this.processLoginResponse(request);
     }
 
     Register = (payload: PasswordRegisterPayload) => {
         const request = this.http.post<RegisterResponse>('api/auth/email-register', payload).pipe(share());
-
-        request.subscribe(response => {
-            this.setState(state => ({
-                ...state,
-                status: {
-                    isAuthenticated: response.valid,
-                    displayName: response.displayName
-                }
-            }));
-
-            if (response.valid) {
-                this.cookieService.set('token', response.token);
-                this.cookieService.set('displayName', response.displayName);
-            }
-        });
+        request.subscribe(this.setAuthentication);
 
         return request.pipe(map(({ valid, accountAlreadyInUse }) => ({ success: valid, accountAlreadyInUse })));
     };
 
-    OAuth = (payload: OAuthPayload) => this.setUser( of<AuthResult>({ success: true }).pipe(delay(500)) );
+    OAuth = (payload: OAuthPayload) => {
+        const request = this.http.post<LoginResponse>(`api/auth/assert`, {}, { params: {
+            code: payload.token
+        }}).pipe(share());
+        return this.processLoginResponse(request);
+    }
 
     VerifyAvailability = (identifier: string) => this.http.get<boolean>(`api/auth/email-availability/${identifier}`).pipe(share());
 

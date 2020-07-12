@@ -17,7 +17,8 @@ export class AssertionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.queryParams.subscribe(params => {
+      console.log(params);
       if (_.has(params, 'code')) {
         this.code = params['code'];
 
