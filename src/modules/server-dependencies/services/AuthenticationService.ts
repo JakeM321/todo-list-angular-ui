@@ -109,7 +109,7 @@ export class AuthenticationService extends Service<AuthenticationServiceState> i
 
     OAuth = (payload: OAuthPayload) => this.setUser( of<AuthResult>({ success: true }).pipe(delay(500)) );
 
-    VerifyAvailability = (identifier: string) => of(true).pipe(delay(500));
+    VerifyAvailability = (identifier: string) => this.http.get<boolean>(`api/auth/email-availability/${identifier}`).pipe(share());
 
     Logout = () => {
         this.cookieService.delete('token');

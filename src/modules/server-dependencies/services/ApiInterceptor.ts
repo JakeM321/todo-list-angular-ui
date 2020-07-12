@@ -13,7 +13,13 @@ export class ApiInterceptor implements HttpInterceptor {
     intercept = (req: HttpRequest<any>, next: HttpHandler) => {
         var headers = req.headers;
 
-        if (!req.url.includes('email-login') && !req.url.includes('email-register')) {
+        const exemptRoutes = [
+            'email-login',
+            'email-availability',
+            'email-register'
+        ];
+
+        if (exemptRoutes.filter(route => req.url.includes(route)).length === 0) {
             const token = this.cookieService.get('token');
             headers.set('token', token);
         }
