@@ -38,6 +38,8 @@ export class AuthenticationService extends Service<AuthenticationServiceState> i
         return callback;
     }
 
+    SsoRedirectUrl = () => of('http://localhost:4200/assert/code');
+
     Login = (payload: PasswordAuthPayload) => this.setUser( of<AuthResult>({ success: true }).pipe(delay(1000)) );
     Register = (payload: PasswordAuthPayload) => this.setUser( of<RegisterResult>({ success: true, accountAlreadyInUse: false }).pipe(delay(500)) );
 

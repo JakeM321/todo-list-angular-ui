@@ -6,6 +6,8 @@ export interface IAuthenticationService {
 
     Initialize();
 
+    SsoRedirectUrl(): Observable<string>;
+
     Login(payload: PasswordAuthPayload): Observable<AuthResult>;
     Register(payload: PasswordAuthPayload): Observable<RegisterResult>;
 

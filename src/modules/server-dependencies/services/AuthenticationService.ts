@@ -85,6 +85,8 @@ export class AuthenticationService extends Service<AuthenticationServiceState> i
         return request.pipe(map(({ valid }) => ({ success: valid })));
     }
 
+    SsoRedirectUrl = () => this.http.get<string>('api/auth/oauth-redirect', { responseType: 'text' as 'json' });
+
     Login = (payload: PasswordAuthPayload) => {
         const request = this.http.post<LoginResponse>('api/auth/email-login', payload).pipe(share());
         return this.processLoginResponse(request);
