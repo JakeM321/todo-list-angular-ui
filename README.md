@@ -4,7 +4,11 @@ This is the user interface for a TODO list project that I am currently building.
 
  * A web UI built in Angular
  * A mobile app built with React Native; and
- * A back-end written in .NET Core
+ * An API written in .NET Core
+
+For the API, please see: 
+
+https://github.com/JakeM321/todo-list-backend
 
 The aim of this project is to demonstrate my capabilities in the above-listed stack, as well as in the following areas:
 
@@ -33,8 +37,6 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 ## Mock mode
 
 Run `ng-serve --mock` to run the dev server in mock mode. In mock mode, all back-end dependencies are replaced with mock data, allowing the UI to be debugged without an API to support it.
-
-2020-07-06: The UI currently runs in mock mode by default, as the actual server integration has yet to be implemented.
 
 ## Code scaffolding
 
