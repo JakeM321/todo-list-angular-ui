@@ -3,8 +3,7 @@
 import { ServerDependenciesMockModule } from 'src/modules/server-dependencies-mock/server-dependencies-mock.module';
 
 export const environment = {
-  production: true,
-  sso: 'assert/code'
+  production: true
 };
 
 export { ServerDependenciesMockModule as DependenciesModule }

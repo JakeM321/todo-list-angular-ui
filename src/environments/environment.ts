@@ -9,7 +9,6 @@ import { ServerDependenciesModule } from 'src/modules/server-dependencies/server
 export const environment = {
   production: false,
   logStateChange: true,
-  sso: 'assert/code',
   baseUrl: 'https://localhost:44325'
 };
 
