@@ -1,9 +1,8 @@
 import { Observable } from 'rxjs';
-import { Notification, ProjectInfo, Option, ProjectListQuery, CreateProjectPayload, CreateProjectResponse, ProjectTask, AppUser, CreateTaskPayload, CreateTaskResponse } from '../Types';
+import { ProjectInfo, Option, ProjectListQuery, CreateProjectPayload, CreateProjectResponse, ProjectTask, AppUser, CreateTaskPayload, CreateTaskResponse } from '../Types';
 
 export interface ITodoListApi {
-    loadNotifications(): Observable<Notification[]>;
-    markNotificationsAsSeen(notifications: string[]): Observable<boolean>;
+    markNotificationsAsSeen(notifications: number[]): Observable<boolean>;
 
     listProjects(query: ProjectListQuery): Observable<ProjectInfo[]>;
     findProjectById(id: string): Observable<Option<ProjectInfo>>;

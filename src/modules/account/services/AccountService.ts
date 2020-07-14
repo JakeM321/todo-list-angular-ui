@@ -2,7 +2,7 @@ import { Injectable, Inject } from "@angular/core";
 import { IAuthenticationService } from 'src/modules/server/services/IAuthenticationService';
 import { Service } from 'src/shared/Service';
 import { Router } from '@angular/router';
-import { AuthResult, RegisterResult } from 'src/modules/server/Types';
+import { AuthResult } from 'src/modules/server/Types';
 
 type Screen = 'login' | 'register';
 
@@ -66,7 +66,7 @@ export class AccountService extends Service<AccountServiceState> {
 
     register = this.submit(
         this.authenticationService.Register,
-        (result: RegisterResult) => {}
+        (result: AuthResult) => {}
     );
 
     loginError = this.pick(state => state.loginError);

@@ -10,8 +10,8 @@
     <div #notificationmenu class="drop-menu notification-menu scroll-custom" [ngClass]="scrollClass | async">
         <h3 class="notification-heading subtitle is-3">Notifications</h3>
         <div class="notification-item" *ngFor="let item of notifications | async">
-            <h5 class="subtitle is-5">{{ item.header }}</h5>
-            <p class="text-subtle">{{ item.body }}</p>
+            <h5 class="subtitle is-5">{{ item.subject }}</h5>
+            <p class="text-subtle">{{ item.message }}</p>
         </div>
     </div>
 </app-anchor-window>

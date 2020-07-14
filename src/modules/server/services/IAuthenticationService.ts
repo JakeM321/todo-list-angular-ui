@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { AuthStatus, AuthResult, RegisterResult, PasswordAuthPayload, OAuthPayload, WebsocketMessage } from '../Types';
+import { AuthStatus, AuthResult, PasswordAuthPayload, OAuthPayload, Notification } from '../Types';
 
 export interface IAuthenticationService {
     Status: Observable<AuthStatus>;
@@ -9,13 +9,12 @@ export interface IAuthenticationService {
     SsoRedirectUrl(): Observable<string>;
 
     Login(payload: PasswordAuthPayload): Observable<AuthResult>;
-    Register(payload: PasswordAuthPayload): Observable<RegisterResult>;
-
+    Register(payload: PasswordAuthPayload): Observable<AuthResult>;
     OAuth(payload: OAuthPayload): Observable<AuthResult>;
 
     VerifyAvailability(identifier: string): Observable<boolean>;
 
     Logout();
 
-    websocket: Observable<WebsocketMessage>;
+    notificationFeed: Observable<Notification>;
 }

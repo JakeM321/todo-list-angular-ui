@@ -2,7 +2,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { AppNotificationService } from '../AppNotificationService';
 import { IAuthenticationService } from 'src/modules/server/services/IAuthenticationService';
 import { Observable, of, Subject } from 'rxjs';
-import { AuthStatus, WebsocketMessage, Notification } from 'src/modules/server/Types';
+import { AuthStatus, Notification, ProjectListQuery, CreateProjectPayload, CreateTaskPayload } from 'src/modules/server/Types';
 import { ITodoListApi } from 'src/modules/server/services/ITodoListApi';
 import { Injectable } from '@angular/core';
 import { filter } from 'rxjs/operators';
@@ -11,12 +11,10 @@ import { filter } from 'rxjs/operators';
 class AuthService implements IAuthenticationService {
     Status: Observable<AuthStatus>;
     Login = payload => of({ success: true });
-    Register = payload => of({ success: true, accountAlreadyInUse: false })
+    Register = payload => of({ success: true })
     OAuth = payload => of({ success: true });
     VerifyAvailability = payload => of(true);
     Logout = () => {};
-
-    websocket = new Subject<WebsocketMessage>();
 };
 
 const initialNotification = {
@@ -32,10 +30,7 @@ const newNotification = { ...initialNotification, id: 'efgh5678' };
 
 @Injectable()
 class Api implements ITodoListApi {
-    loadNotifications = (): Observable<Notification[]> => of([ initialNotification ]);
-
-    markNotificationsAsSeen = (ids: string[]) => of(true);
-
+    markNotificationsAsSeen = (ids: number[]) => of(true);
 };
 
 describe('AppNotificationService', () => {

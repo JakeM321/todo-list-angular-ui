@@ -42,17 +42,8 @@ export class TodoListApi implements ITodoListApi {
             }
         })
     });
-
-    loadNotifications = (): Observable<Notification[]> => of([{
-        id: '1',
-        header: 'You\'re using mock mode!',
-        body: 'Mock mode replaces all server dependencies with injected test data, so you can roam around and test the UI without a back-end.',
-        isLink: true,
-        link: 'github.com/JakeM123',
-        seen: false
-    }]);
-
-    markNotificationsAsSeen = (ids: string[]) => of(true);
+    
+    markNotificationsAsSeen = (ids: number[]) => of(true);
 
     listProjects = (query: ProjectListQuery) => of(
         this.projectCache.value.projects.filter(project => {

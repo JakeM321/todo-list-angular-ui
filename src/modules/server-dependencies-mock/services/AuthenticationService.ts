@@ -1,6 +1,6 @@
 import { IAuthenticationService } from 'src/modules/server/services/IAuthenticationService';
-import { of, BehaviorSubject } from 'rxjs';
-import { AuthStatus, PasswordAuthPayload, AuthResult, OAuthPayload, RegisterResult, WebsocketMessage } from 'src/modules/server/Types';
+import { of, BehaviorSubject, ReplaySubject } from 'rxjs';
+import { AuthStatus, PasswordAuthPayload, AuthResult, OAuthPayload, Notification } from 'src/modules/server/Types';
 import { Service } from 'src/shared/Service';
 import { delay } from 'rxjs/operators';
 import { Inject, Injectable } from '@angular/core';
@@ -38,16 +38,22 @@ export class AuthenticationService extends Service<AuthenticationServiceState> i
         return callback;
     }
 
-    SsoRedirectUrl = () => of('http://localhost:4200/assert/code');
+    SsoRedirectUrl = () => of('http://localhost:4200/assert?code=123');
 
     Login = (payload: PasswordAuthPayload) => this.setUser( of<AuthResult>({ success: true }).pipe(delay(1000)) );
-    Register = (payload: PasswordAuthPayload) => this.setUser( of<RegisterResult>({ success: true, accountAlreadyInUse: false }).pipe(delay(500)) );
-
+    Register = (payload: PasswordAuthPayload) => this.setUser( of<AuthResult>({ success: true }).pipe(delay(500)) );
     OAuth = (payload: OAuthPayload) => this.setUser( of<AuthResult>({ success: true }).pipe(delay(500)) );
 
     VerifyAvailability = (identifier: string) => of(true).pipe(delay(500));
 
     Logout = () => this.setState(state => ({ ...state, status: { isAuthenticated: false, displayName: '' }}));
 
-    websocket = new BehaviorSubject<WebsocketMessage>({ header: '', body: ''});
+    notificationFeed = new BehaviorSubject<Notification>({
+        id: 1,
+        subject: 'You\'re using mock mode!',
+        message: 'Mock mode replaces all server dependencies with injected test data, so you can roam around and test the UI without a back-end.',
+        isLink: true,
+        link: 'github.com/JakeM123',
+        seen: false
+    });
 };

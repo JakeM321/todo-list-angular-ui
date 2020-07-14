@@ -1,3 +1,5 @@
+import { object, number, string, boolean } from 'yup';
+
 export interface AuthStatus {
     isAuthenticated: boolean;
     displayName: string;
@@ -5,10 +7,6 @@ export interface AuthStatus {
 
 export interface AuthResult {
     success: boolean;
-}
-
-export interface RegisterResult extends AuthResult {
-    accountAlreadyInUse: boolean;
 }
 
 export interface PasswordAuthPayload {
@@ -24,19 +22,23 @@ export interface OAuthPayload {
     token: string;
 }
 
-export interface WebsocketMessage {
-    header: string;
-    body: string;
-}
-
 export interface Notification {
-    id: string;
-    header: string;
-    body: string;
+    id: number;
+    subject: string;
+    message: string;
     isLink: boolean;
     link: string;
     seen: boolean;
 }
+
+export const notificationSchema = object({
+    id: number().required(),
+    subject: string().required(),
+    message: string().required(),
+    isLink: boolean().required(),
+    link: string(),
+    seen: boolean().required()
+}).unknown();
 
 export interface ProjectInfo {
     id: string;

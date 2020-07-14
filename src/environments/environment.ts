@@ -9,6 +9,7 @@ import { ServerDependenciesModule } from 'src/modules/server-dependencies/server
 export const environment = {
   production: false,
   logStateChange: true,
+  logMessages: true,
   baseUrl: 'https://localhost:44325'
 };
 
