@@ -11,22 +11,22 @@ export class ApiInterceptor implements HttpInterceptor {
     ) {}
 
     intercept = (req: HttpRequest<any>, next: HttpHandler) => {
-        var headers = req.headers;
-
         const exemptRoutes = [
             'email-login',
             'email-availability',
             'email-register'
         ];
 
-        if (exemptRoutes.filter(route => req.url.includes(route)).length === 0) {
-            const token = this.cookieService.get('token');
-            headers.set('token', token);
-        }
+        const includeToken = exemptRoutes.filter(route => req.url.includes(route)).length === 0;
+        const token = this.cookieService.get('token');
+
+        var headers = req.headers;
+
+        var chosenHeaders = includeToken ? headers.set('token', token) : headers;
 
         const modifiedRequest = req.clone({
             url: `${this.environment.baseUrl}/${req.url}`,
-            headers
+            headers: chosenHeaders
         });
 
         return next.handle(modifiedRequest).pipe(
