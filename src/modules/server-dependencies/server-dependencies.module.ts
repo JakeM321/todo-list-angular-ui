@@ -4,7 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { ApiInterceptor } from './services/ApiInterceptor';
 import { AuthenticationService } from './services/AuthenticationService';
-import { TodoListApi } from '../server-dependencies-mock/services/TodoListApi';
+import { TodoListApi } from './services/TodoListApi';
 
 
 @NgModule({

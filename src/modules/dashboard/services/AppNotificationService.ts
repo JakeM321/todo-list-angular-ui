@@ -41,6 +41,6 @@ export class AppNotificationService extends Service<AppNotificationServiceState>
             notifications: state.notifications.map(n => ({ ...n, seen: true }))
         }));
 
-        this.api.markNotificationsAsSeen(unseen);
+        this.api.markNotificationsAsSeen(unseen).subscribe();
     };
 }
