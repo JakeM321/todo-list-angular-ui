@@ -33,7 +33,7 @@ export class TodoListApi implements ITodoListApi {
         map(response => ({ success: true }))
     );
 
-    setFavourite = (id: string, favourite: boolean) => {};
+    setFavourite = (id: string, favourite: boolean) => this.http.patch(`api/projects/set-favourite?projectId=${id}`, { favourite }).subscribe();
 
     listUpcomingTasks = () => of([]);
     listProjectTasks = (id: string) => this.http.get<ProjectTask[]>(`api/projects/tasks`, { params: new HttpParams({
