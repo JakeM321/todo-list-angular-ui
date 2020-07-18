@@ -46,5 +46,6 @@ export class TodoListApi implements ITodoListApi {
 
     listMembers = (id: string) => this.http.get<AppUser[]>(`api/projects/members?projectId=${id}`).pipe(share());
 
-    markTaskCompletion = (projectId: string, taskId: string, completed: boolean) => {};
+    markTaskCompletion = (projectId: string, taskId: string, completed: boolean) => 
+        this.http.patch(`api/projects/tasks/set-completion?projectId=${projectId}&projectTaskId=${taskId}`, { completed }).subscribe();
 }
