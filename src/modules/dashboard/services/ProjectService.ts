@@ -113,22 +113,25 @@ export class ProjectService extends Service<ProjectServiceState> {
     };
 
     openProject = (id: string) => {
+        console.log('Open project');
         this.setState(state => ({ ...state, selected: { ...state.selected, loading: true }}));
         const projectReq = this.api.findProjectById(id)
         const taskReq = this.api.listProjectTasks(id);
         const membersReq = this.api.listMembers(id);
 
-        combineLatest(projectReq, taskReq, membersReq).subscribe(([project, tasks, members]) => this.setState(state => ({
-            ...state,
-            selected: {
-                attempted: true,
-                loading: false,
-                some: project.some,
-                project: project.item,
-                tasks: getTaskCache(tasks),
-                members
-            }
-        })));
+        combineLatest(projectReq, taskReq, membersReq).subscribe(([project, tasks, members]) => {
+            this.setState(state => ({
+                ...state,
+                selected: {
+                    attempted: true,
+                    loading: false,
+                    some: project.some,
+                    project: project.item,
+                    tasks: getTaskCache(tasks),
+                    members
+                }
+            }));
+        });
     };
 
     createNewProject = (payload: CreateProjectPayload) => {

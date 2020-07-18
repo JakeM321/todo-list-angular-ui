@@ -1,7 +1,7 @@
 import { ITodoListApi } from 'src/modules/server/services/ITodoListApi';
 import { of, Observable } from 'rxjs';
-import { ProjectListQuery, CreateProjectPayload, CreateTaskPayload } from 'src/modules/server/Types';
-import { HttpClient } from '@angular/common/http';
+import { ProjectListQuery, CreateProjectPayload, CreateTaskPayload, ProjectInfo, CreateProjectResponse, Option, ProjectTask, CreateTaskResponse, AppUser } from 'src/modules/server/Types';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { share, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
@@ -16,16 +16,35 @@ export class TodoListApi implements ITodoListApi {
         map(() => true)
     );
 
-    listProjects = (query: ProjectListQuery) => of([]);
-    findProjectById = (id: string) => of({ some: false, item: undefined });
+    listProjects = (query: ProjectListQuery) => this.http.get<ProjectInfo[]>(`api/projects/list`, { params: new HttpParams({
+      fromObject: query as unknown as { [param: string]: string }
+    })}).pipe(
+        share()
+    );
 
-    createNewProject = (payload: CreateProjectPayload) => of({id: '1'});
-    createNewTask = (payload: CreateTaskPayload) => of({success: true});
+    findProjectById = (id: string) => this.http.get<Option<ProjectInfo>>(`api/projects/info?projectId=${id}`).pipe(share());
+
+    createNewProject = (payload: CreateProjectPayload) => this.http.post<CreateProjectResponse>('api/projects/new', payload).pipe(
+        share()
+    );
+
+    createNewTask = (payload: CreateTaskPayload) => this.http.post<CreateTaskResponse>(`api/projects/tasks/create?projectId=${payload.projectId}`, payload).pipe(
+        share(),
+        map(response => ({ success: true }))
+    );
+
     setFavourite = (id: string, favourite: boolean) => {};
 
     listUpcomingTasks = () => of([]);
-    listProjectTasks = (id: string) => of([]);
-    listMembers = (id: string) => of([]);
+    listProjectTasks = (id: string) => this.http.get<ProjectTask[]>(`api/projects/tasks`, { params: new HttpParams({
+        fromObject: {
+            projectId: id,
+            skip: '0',
+            take: '50'
+        }
+    })}).pipe(share());
+
+    listMembers = (id: string) => this.http.get<AppUser[]>(`api/projects/members?projectId=${id}`).pipe(share());
 
     markTaskCompletion = (projectId: string, taskId: string, completed: boolean) => {};
 }

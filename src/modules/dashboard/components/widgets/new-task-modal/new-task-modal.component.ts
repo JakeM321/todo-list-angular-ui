@@ -41,7 +41,7 @@ export class NewTaskModalComponent implements OnInit {
       const request = this.projectService.createNewTask({
         projectId: this.projectId,
         assignedTo: this.form.get('assignTo').value,
-        name: this.form.get('name').value,
+        label: this.form.get('name').value,
         description: this.form.get('description').value
       });
 

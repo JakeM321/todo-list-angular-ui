@@ -63,7 +63,7 @@ export interface CreateProjectPayload {
 
 export interface CreateTaskPayload {
     projectId: string;
-    name: string;
+    label: string;
     description: string;
     assignedTo: AppUser;
 }
