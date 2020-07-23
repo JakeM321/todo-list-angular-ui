@@ -52,6 +52,8 @@ export class AuthenticationService extends Service<AuthenticationServiceState> i
                     displayName: this.cookieService.get('displayName')
                 }
             }));
+
+            this.connectNotifications();
         }
     };
 
