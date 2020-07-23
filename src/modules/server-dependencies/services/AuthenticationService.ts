@@ -2,7 +2,7 @@ import { IAuthenticationService } from 'src/modules/server/services/IAuthenticat
 import { of, BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { AuthStatus, PasswordAuthPayload, AuthResult, OAuthPayload, PasswordRegisterPayload, notificationSchema } from 'src/modules/server/Types';
 import { Service } from 'src/shared/Service';
-import { delay, share, map } from 'rxjs/operators';
+import { delay, share, map, shareReplay } from 'rxjs/operators';
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
@@ -60,7 +60,7 @@ export class AuthenticationService extends Service<AuthenticationServiceState> i
             this.notificationHub = new SignalRManager<Notification>(this.environment, this.cookieService);
             this.notificationHub.initialize('notification', notificationSchema);
 
-            this.notificationHub.feed.subscribe(value => {
+            this.notificationHub.feed.pipe(shareReplay()).subscribe(value => {
                 this.notificationFeed.next(value);
             });
         }

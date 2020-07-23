@@ -2,7 +2,7 @@ import { Injectable, Inject } from "@angular/core";
 import { IAuthenticationService } from 'src/modules/server/services/IAuthenticationService';
 import { Notification } from 'src/modules/server/Types';
 import { Service } from 'src/shared/Service';
-import { filter, share, shareReplay } from 'rxjs/operators';
+import { filter, share, shareReplay, distinctUntilChanged, distinct } from 'rxjs/operators';
 import { ITodoListApi } from 'src/modules/server/services/ITodoListApi';
 
 interface AppNotificationServiceState {
@@ -24,10 +24,15 @@ export class AppNotificationService extends Service<AppNotificationServiceState>
     }
 
     initialize = () => {
-        this.authenticationService.notificationFeed.pipe(shareReplay()).subscribe(notification => this.setState(state => ({
-            ...state,
-            notifications: [ ...state.notifications, notification ]
-        })));
+        this.authenticationService.notificationFeed.pipe(distinct(n => n.id)).subscribe(notification => {
+            this.setState(state => ({
+                ...state,
+                notifications: 
+                    state.notifications.map(n => n.id).includes(notification.id) 
+                        ? state.notifications 
+                        : [ ...state.notifications, notification ]
+            }))
+        });
     };
 
     notifications = this.pick(state => state.notifications);

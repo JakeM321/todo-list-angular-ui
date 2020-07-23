@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { AppNotificationService } from 'src/modules/dashboard/services/AppNotificationService';
 import { DashboardUiService } from 'src/modules/dashboard/services/DashboardUiService';
-import { take } from 'rxjs/operators';
+import { take, map, reduce } from 'rxjs/operators';
 import _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 
@@ -23,7 +23,7 @@ export class NotificationMenuComponent implements OnInit {
 
   public scrollClass = new BehaviorSubject<string>('scroll-hidden');
 
-  notifications = this.notificationService.notifications.pipe(take(5));
+  notifications = this.notificationService.notifications.pipe(map(notifications => notifications.sort((a, b) => b.id - a.id)));
   notificationCount = this.notificationService.unseenCount;
   notificationsOpen = this.dashboardUiService.notificationsOpen;
 
