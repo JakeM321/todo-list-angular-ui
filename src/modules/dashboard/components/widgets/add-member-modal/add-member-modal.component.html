@@ -1,0 +1,24 @@
+<div class="modal" [ngClass]="(menuOpen | async) ? 'is-active' : ''" style="z-index: 5;">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="panel is-dark">
+            <div class="panel-heading">
+                Add Member
+            </div>
+            <div class="panel-block" style="background: white;">
+                <form [formGroup]="form" (ngSubmit)="onSubmit()" style="flex-grow: 1;">
+                    <div class="form-group">
+                        <label class="label">Email address:</label>
+                        <input class="input" formControlName="email" />
+                    </div>
+                    <br/>
+                    <div class="flex-row space-between">
+                        <button class="button is-primary" [disabled]="!form.valid">Add</button>
+                        <button class="button is-light" (click)="close()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close" (click)="close()"></button>
+</div>

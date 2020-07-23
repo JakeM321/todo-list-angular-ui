@@ -68,6 +68,11 @@ export interface CreateTaskPayload {
     assignedTo: AppUser;
 }
 
+export interface AddMemberPayload {
+    projectId: string;
+    email: string;
+}
+
 export interface CreateProjectResponse {
     id: string;
 }

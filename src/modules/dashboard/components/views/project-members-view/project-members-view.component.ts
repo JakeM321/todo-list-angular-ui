@@ -20,4 +20,6 @@ export class ProjectMembersViewComponent implements OnInit {
 
   members = this.projectService.members;
 
+  newMember = () => this.dashboardUiService.toggleAddMemberMenu();
+
 }

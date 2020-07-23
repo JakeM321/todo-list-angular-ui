@@ -1,6 +1,6 @@
 import { ITodoListApi } from 'src/modules/server/services/ITodoListApi';
 import { of, Observable } from 'rxjs';
-import { ProjectListQuery, CreateProjectPayload, CreateTaskPayload, ProjectInfo, CreateProjectResponse, Option, ProjectTask, CreateTaskResponse, AppUser } from 'src/modules/server/Types';
+import { ProjectListQuery, CreateProjectPayload, CreateTaskPayload, ProjectInfo, CreateProjectResponse, Option, ProjectTask, CreateTaskResponse, AppUser, AddMemberPayload } from 'src/modules/server/Types';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { share, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -48,4 +48,6 @@ export class TodoListApi implements ITodoListApi {
 
     markTaskCompletion = (projectId: string, taskId: string, completed: boolean) => 
         this.http.patch(`api/projects/tasks/set-completion?projectId=${projectId}&projectTaskId=${taskId}`, { completed }).subscribe();
+
+    addMember = ({projectId, email}: AddMemberPayload) => this.http.post(`api/projects/add-member?projectId=${projectId}`, { email }).pipe(share());
 }

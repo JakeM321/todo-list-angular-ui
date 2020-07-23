@@ -71,6 +71,16 @@ p.subtle {
     border-radius: 5px;
 }
 
+.add-button {
+    cursor: pointer;
+    align-items: baseline;
+    flex-grow: 0;
+}
+
+.add-button:hover > *, .add-button:hover > * > * {
+    color: rgb(0, 206, 221);
+}
+
 @media all and (max-width: @sizes[mobile]) {
     .drop-menu {
         width: 98vw;

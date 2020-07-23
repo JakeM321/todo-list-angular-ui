@@ -1,4 +1,4 @@
-import { ProjectInfo, CreateProjectPayload, ProjectTask, ProjectTaskIdentity, AppUser, CreateTaskPayload } from 'src/modules/server/Types';
+import { ProjectInfo, CreateProjectPayload, ProjectTask, ProjectTaskIdentity, AppUser, CreateTaskPayload, AddMemberPayload } from 'src/modules/server/Types';
 import { Service } from 'src/shared/Service';
 import { Inject, Injectable } from '@angular/core';
 import { ITodoListApi } from 'src/modules/server/services/ITodoListApi';
@@ -147,6 +147,11 @@ export class ProjectService extends Service<ProjectServiceState> {
         req.subscribe(() => this.setState(state => ({ ...state, creatingTask: false })));
         return req;
     };
+
+    addMember = (payload: AddMemberPayload) => {
+        const req = this.api.addMember(payload);
+        return req;
+    }
 
     creating = this.pick(state => state.creating);
     selected = this.pick(state => ({

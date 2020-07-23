@@ -1,7 +1,7 @@
 import { ITodoListApi } from 'src/modules/server/services/ITodoListApi';
 import { of, Observable, Subject, BehaviorSubject } from 'rxjs';
 import { Injectable, Inject } from '@angular/core';
-import { Notification, ProjectInfo, CreateProjectPayload, ProjectListQuery, CreateProjectResponse, ProjectTask, AppUser, CreateTaskPayload, CreateTaskResponse } from 'src/modules/server/Types';
+import { Notification, ProjectInfo, CreateProjectPayload, ProjectListQuery, CreateProjectResponse, ProjectTask, AppUser, CreateTaskPayload, CreateTaskResponse, AddMemberPayload } from 'src/modules/server/Types';
 import _ from 'lodash';
 import { delay, map } from 'rxjs/operators';
 import { IAuthenticationService } from 'src/modules/server/services/IAuthenticationService';
@@ -86,7 +86,7 @@ export class TodoListApi implements ITodoListApi {
         const task: ProjectTask = {
             ...payload,
             id: uuidv4(),
-            label: payload.name,
+            label: payload.label,
             completed: false
         };
 
@@ -111,4 +111,6 @@ export class TodoListApi implements ITodoListApi {
     listMembers = (id: string) => of(
         _.get(this.memberCache.value, id, [])
     );
+
+    addMember = (payload: AddMemberPayload) => of({});
 };
