@@ -2,12 +2,17 @@ import { Injectable, Inject } from "@angular/core";
 import { HttpInterceptor, HttpRequest, HttpHandler } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { catchError } from 'rxjs/operators';
+import _ from 'lodash';
+import { IAuthenticationService } from 'src/modules/server/services/IAuthenticationService';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
     constructor(
         @Inject('environment') private environment,
-        private cookieService: CookieService
+        private cookieService: CookieService,
+        @Inject('IAuthenticationService') private authenticationService: IAuthenticationService,
+        private router: Router
     ) {}
 
     intercept = (req: HttpRequest<any>, next: HttpHandler) => {
@@ -32,6 +37,12 @@ export class ApiInterceptor implements HttpInterceptor {
         return next.handle(modifiedRequest).pipe(
             catchError(e => {
                 console.log('HTTP error', e);
+
+                if (_.get(e, 'status', 0) === 401) {
+                    this.authenticationService.Logout();
+                    this.router.navigate(['/logout']);
+                }
+
                 throw e;
             })
         );
